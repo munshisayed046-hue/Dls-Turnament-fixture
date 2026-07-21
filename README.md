@@ -1,2 +1,2 @@
 # Dls-Turnament-fixture
-munshisayed046-hue.github.io
+https://munshisayed046-hue.github.io/Dls-Turnament-fixture/

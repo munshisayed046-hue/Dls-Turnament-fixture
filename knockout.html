@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Knockout Stage</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#0b132b;
+color:white;
+text-align:center;
+}
+
+.box{
+background:#1c2541;
+width:90%;
+margin:20px auto;
+padding:20px;
+border-radius:15px;
+}
+
+.match{
+background:#3a506b;
+padding:12px;
+margin:10px;
+border-radius:10px;
+}
+
+.win{
+background:#198754;
+padding:5px;
+border-radius:5px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<h1>🏆 Knockout Stage</h1>
+
+
+<div class="box">
+
+<h2>⚔️ Round of 16</h2>
+<div id="r16"></div>
+
+
+<h2>🏆 Quarter Final</h2>
+<div id="qf"></div>
+
+
+<h2>🔥 Semi Final</h2>
+<div id="sf"></div>
+
+
+<h2>🏆 Final</h2>
+<div id="final"></div>
+
+
+<h2 id="champ"></h2>
+
+
+</div>
+
+
+<script>
+
+
+let r16Matches =
+JSON.parse(localStorage.r16Matches || "[]");
+
+
+let knockout =
+JSON.parse(localStorage.knockoutResults || "[]");
+
+
+function getWinner(match,score){
+
+
+let s=score.split("-");
+
+
+let a=Number(s[0]);
+let b=Number(s[1]);
+
+
+let teams=match.split(" vs ");
+
+
+if(a>b)
+return teams[0];
+
+
+if(b>a)
+return teams[1];
+
+
+return "Draw";
+
+
+}
+
+
+
+function showR16(){
+
+
+let box=document.getElementById("r16");
+
+box.innerHTML="";
+
+
+r16Matches.forEach((m,i)=>{
+
+
+let result=knockout.find(
+x=>x.match==m
+);
+
+
+let text=m;
+
+
+if(result){
+
+text+="<br>Score: "+result.score;
+
+text+="<br>Winner: "+getWinner(m,result.score);
+
+}
+
+
+box.innerHTML+=`
+
+<div class="match">
+
+Match ${i+1}<br>
+
+${text}
+
+</div>
+
+`;
+
+
+});
+
+
+}
+
+
+showR16();
+// ===============================
+// Quarter Final Generate
+// ===============================
+
+
+function createQF(){
+
+
+let winners=[];
+
+
+r16Matches.forEach(m=>{
+
+
+let r=knockout.find(
+x=>x.match==m
+);
+
+
+if(r){
+
+let w=getWinner(m,r.score);
+
+if(w!="Draw")
+winners.push(w);
+
+}
+
+
+});
+
+
+
+let qfBox=document.getElementById("qf");
+
+
+qfBox.innerHTML="";
+
+
+for(let i=0;i<winners.length;i+=2){
+
+
+if(winners[i+1]){
+
+
+let match=winners[i]+" vs "+winners[i+1];
+
+
+let r=knockout.find(
+x=>x.match==match
+);
+
+
+
+let html=match;
+
+
+if(r){
+
+html+="<br>Score: "+r.score;
+
+html+="<br>Winner: "+getWinner(match,r.score);
+
+}
+
+
+
+qfBox.innerHTML+=`
+
+<div class="match">
+
+Quarter Final ${i/2+1}
+
+<br>
+
+${html}
+
+</div>
+
+`;
+
+}
+
+
+
+}
+
+
+
+}
+
+
+
+
+// ===============================
+// Semi Final Generate
+// ===============================
+
+
+function createSF(){
+
+
+let qfWinner=[];
+
+
+let all=document.querySelectorAll("#qf .match");
+
+
+all.forEach(box=>{
+
+
+let txt=box.innerText;
+
+
+if(txt.includes("Winner:")){
+
+
+let w=txt.split("Winner: ")[1];
+
+qfWinner.push(w);
+
+
+}
+
+
+});
+
+
+
+let sfBox=document.getElementById("sf");
+
+sfBox.innerHTML="";
+
+
+
+for(let i=0;i<qfWinner.length;i+=2){
+
+
+if(qfWinner[i+1]){
+
+
+let match=qfWinner[i]+" vs "+qfWinner[i+1];
+
+
+sfBox.innerHTML+=`
+
+<div class="match">
+
+Semi Final ${i/2+1}
+
+<br>
+
+${match}
+
+</div>
+
+`;
+
+}
+
+
+}
+
+
+
+}
+
+
+
+createQF();
+
+createSF();
+// ===============================
+// Final Generate
+// ===============================
+
+
+function createFinal(){
+
+
+let sfWinners=[];
+
+
+let sf=document.querySelectorAll("#sf .match");
+
+
+sf.forEach(box=>{
+
+
+let txt=box.innerText;
+
+
+if(txt.includes("Winner:")){
+
+
+let w=txt.split("Winner: ")[1];
+
+sfWinners.push(w);
+
+
+}
+
+
+});
+
+
+
+let finalBox=document.getElementById("final");
+
+
+finalBox.innerHTML="";
+
+
+
+if(sfWinners.length==2){
+
+
+let match=sfWinners[0]+" vs "+sfWinners[1];
+
+
+let r=knockout.find(
+x=>x.match==match
+);
+
+
+
+let html=match;
+
+
+
+if(r){
+
+
+html+="<br>Score: "+r.score;
+
+html+="<br>Winner: "+getWinner(match,r.score);
+
+
+document.getElementById("champ").innerHTML=
+"🏆 Champion: "+getWinner(match,r.score);
+
+
+}
+
+
+
+finalBox.innerHTML=`
+
+<div class="match">
+
+🏆 Final
+
+<br>
+
+${html}
+
+</div>
+
+`;
+
+
+}
+
+
+}
+
+
+
+
+// Update সব
+
+createFinal();
+
+
+
+</script>
+
+
+</body>
+
+</html>

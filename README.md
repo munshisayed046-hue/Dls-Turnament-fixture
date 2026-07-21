@@ -1,2 +1,2 @@
 # Dls-Turnament-fixture
-http://dlsfootballcup.com/
+https://munshisayed046-hue.github.io/Dls-Turnament-fixture/

@@ -1,105 +1,630 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 <title>DLS World Cup Fixtures</title>
 
+
 <style>
-body{
-font-family:Arial;
-background:#0b132b;
-color:white;
-text-align:center;
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
 }
 
-.box{
-background:#1c2541;
-margin:15px auto;
-padding:15px;
-width:85%;
-border-radius:15px;
+
+body{
+
+min-height:100vh;
+
+background:
+
+linear-gradient(
+135deg,
+#020617,
+#0f172a,
+#1e3a8a,
+#020617
+);
+
+background-size:400% 400%;
+
+animation:bgMove 12s infinite;
+
+color:white;
+
+padding:20px;
+
 }
+
+
+
+@keyframes bgMove{
+
+0%{
+background-position:0% 50%;
+}
+
+50%{
+background-position:100% 50%;
+}
+
+100%{
+background-position:0% 50%;
+}
+
+}
+
+
+
+.container{
+
+max-width:1000px;
+
+margin:auto;
+
+}
+
+
+
+.header{
+
+text-align:center;
+
+margin-bottom:30px;
+
+}
+
+
+
+.logo{
+
+font-size:70px;
+
+animation:float 3s infinite;
+
+}
+
+
+@keyframes float{
+
+50%{
+
+transform:translateY(-10px);
+
+}
+
+}
+
+
+
+h1{
+
+font-size:42px;
+
+text-shadow:
+
+0 0 20px #38bdf8;
+
+}
+
+
+
+.subtitle{
+
+color:#cbd5e1;
+
+margin-top:10px;
+
+}
+
+
+
+
+.group{
+
+margin:30px 0;
+
+padding:20px;
+
+border-radius:25px;
+
+background:
+
+rgba(255,255,255,.08);
+
+backdrop-filter:blur(15px);
+
+box-shadow:
+
+0 15px 35px rgba(0,0,0,.5);
+
+}
+
+
+
+.group h2{
+
+text-align:center;
+
+margin-bottom:20px;
+
+padding:12px;
+
+border-radius:15px;
+
+background:
+
+linear-gradient(
+135deg,
+#2563eb,
+#9333ea
+);
+
+}
+
+
 
 .match{
-background:#3a506b;
-margin:8px;
-padding:10px;
-border-radius:10px;
+
+position:relative;
+
+overflow:hidden;
+
+margin:12px 0;
+
+padding:18px;
+
+border-radius:18px;
+
+
+background:
+
+linear-gradient(
+135deg,
+#1d4ed8,
+#2563eb
+);
+
+
+font-size:18px;
+
+font-weight:bold;
+
+
+box-shadow:
+
+0 8px 25px rgba(0,0,0,.35);
+
+
+transition:.35s;
+
+cursor:pointer;
+
 }
+
+
+
+.match:hover{
+
+transform:
+
+translateY(-5px)
+scale(1.02);
+
+
+box-shadow:
+
+0 0 30px #00bfff;
+
+}
+
+
+
+
 </style>
+
 
 </head>
 
+
 <body>
 
-<div class="box">
 
-<h1>🏟️ DLS World Cup Fixtures</h1>
+<div class="container">
 
-<h2>Group A</h2>
-<div class="match">🇦🇷 Argentina vs 🇩🇪 Germany</div>
-<div class="match">🇦🇷 Argentina vs 🇨🇦 Canada</div>
-<div class="match">🇦🇷 Argentina vs 🇸🇦 Saudi Arabia</div>
-<div class="match">🇩🇪 Germany vs 🇨🇦 Canada</div>
-<div class="match">🇩🇪 Germany vs 🇸🇦 Saudi Arabia</div>
-<div class="match">🇨🇦 Canada vs 🇸🇦 Saudi Arabia</div>
 
-<h2>Group B</h2>
-<div class="match">🇧🇷 Brazil vs 🇵🇹 Portugal</div>
-<div class="match">🇧🇷 Brazil vs 🇳🇬 Nigeria</div>
-<div class="match">🇧🇷 Brazil vs 🇦🇺 Australia</div>
-<div class="match">🇵🇹 Portugal vs 🇳🇬 Nigeria</div>
-<div class="match">🇵🇹 Portugal vs 🇦🇺 Australia</div>
-<div class="match">🇳🇬 Nigeria vs 🇦🇺 Australia</div>
+<div class="header">
 
-<h2>Group C</h2>
-<div class="match">🇫🇷 France vs 🏴 England</div>
-<div class="match">🇫🇷 France vs 🇮🇷 Iran</div>
-<div class="match">🇫🇷 France vs 🇪🇬 Egypt</div>
-<div class="match">🏴 England vs 🇮🇷 Iran</div>
-<div class="match">🏴 England vs 🇪🇬 Egypt</div>
-<div class="match">🇮🇷 Iran vs 🇪🇬 Egypt</div>
+<div class="logo">
 
-<h2>Group D</h2>
-<div class="match">🇪🇸 Spain vs 🇮🇹 Italy</div>
-<div class="match">🇪🇸 Spain vs 🇨🇳 China</div>
-<div class="match">🇪🇸 Spain vs 🇶🇦 Qatar</div>
-<div class="match">🇮🇹 Italy vs 🇨🇳 China</div>
-<div class="match">🇮🇹 Italy vs 🇶🇦 Qatar</div>
-<div class="match">🇨🇳 China vs 🇶🇦 Qatar</div>
-
-<h2>Group E</h2>
-<div class="match">🇳🇱 Netherlands vs 🇧🇪 Belgium</div>
-<div class="match">🇳🇱 Netherlands vs 🇯🇵 Japan</div>
-<div class="match">🇳🇱 Netherlands vs 🇰🇷 South Korea</div>
-<div class="match">🇧🇪 Belgium vs 🇯🇵 Japan</div>
-<div class="match">🇧🇪 Belgium vs 🇰🇷 South Korea</div>
-<div class="match">🇯🇵 Japan vs 🇰🇷 South Korea</div>
-
-<h2>Group F</h2>
-<div class="match">🇭🇷 Croatia vs 🇺🇾 Uruguay</div>
-<div class="match">🇭🇷 Croatia vs 🇲🇦 Morocco</div>
-<div class="match">🇭🇷 Croatia vs 🇸🇳 Senegal</div>
-<div class="match">🇺🇾 Uruguay vs 🇲🇦 Morocco</div>
-<div class="match">🇺🇾 Uruguay vs 🇸🇳 Senegal</div>
-<div class="match">🇲🇦 Morocco vs 🇸🇳 Senegal</div>
-
-<h2>Group G</h2>
-<div class="match">🇨🇴 Colombia vs 🇨🇭 Switzerland</div>
-<div class="match">🇨🇴 Colombia vs 🇵🇱 Poland</div>
-<div class="match">🇨🇴 Colombia vs 🇩🇰 Denmark</div>
-<div class="match">🇨🇭 Switzerland vs 🇵🇱 Poland</div>
-<div class="match">🇨🇭 Switzerland vs 🇩🇰 Denmark</div>
-<div class="match">🇵🇱 Poland vs 🇩🇰 Denmark</div>
-
-<h2>Group H</h2>
-<div class="match">🇺🇸 USA vs 🇹🇷 Turkey</div>
-<div class="match">🇺🇸 USA vs 🇷🇸 Serbia</div>
-<div class="match">🇺🇸 USA vs 🇺🇦 Ukraine</div>
-<div class="match">🇹🇷 Turkey vs 🇷🇸 Serbia</div>
-<div class="match">🇹🇷 Turkey vs 🇺🇦 Ukraine</div>
-<div class="match">🇷🇸 Serbia vs 🇺🇦 Ukraine</div>
+🏆
 
 </div>
 
+
+<h1>
+
+DLS World Cup Fixtures
+
+</h1>
+
+
+<p class="subtitle">
+
+Premium Group Stage Schedule
+
+</p>
+
+
+</div>
+
+
+
+<div class="group">
+
+
+<h2>Group A</h2>
+
+
+<div class="match">
+
+🇦🇷 Argentina
+
+VS
+
+🇩🇪 Germany
+
+</div>
+
+
+<div class="match">
+
+🇦🇷 Argentina
+
+VS
+
+🇨🇦 Canada
+
+</div>
+
+
+<div class="match">
+
+🇦🇷 Argentina
+
+VS
+
+🇸🇦 Saudi Arabia
+
+</div>
+
+
+<div class="match">
+
+🇩🇪 Germany
+
+VS
+
+🇨🇦 Canada
+
+</div>
+
+
+<div class="match">
+
+🇩🇪 Germany
+
+VS
+
+🇸🇦 Saudi Arabia
+
+</div>
+
+
+<div class="match">
+
+🇨🇦 Canada
+
+VS
+
+🇸🇦 Saudi Arabia
+
+</div>
+
+
+</div><div class="group">
+
+
+<h2>Group B</h2>
+
+
+<div class="match">
+🇧🇷 Brazil VS 🇵🇹 Portugal
+</div>
+
+
+<div class="match">
+🇧🇷 Brazil VS 🇳🇬 Nigeria
+</div>
+
+
+<div class="match">
+🇧🇷 Brazil VS 🇦🇺 Australia
+</div>
+
+
+<div class="match">
+🇵🇹 Portugal VS 🇳🇬 Nigeria
+</div>
+
+
+<div class="match">
+🇵🇹 Portugal VS 🇦🇺 Australia
+</div>
+
+
+<div class="match">
+🇳🇬 Nigeria VS 🇦🇺 Australia
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="group">
+
+
+<h2>Group C</h2>
+
+
+<div class="match">
+🇫🇷 France VS 🏴 England
+</div>
+
+
+<div class="match">
+🇫🇷 France VS 🇮🇷 Iran
+</div>
+
+
+<div class="match">
+🇫🇷 France VS 🇪🇬 Egypt
+</div>
+
+
+<div class="match">
+🏴 England VS 🇮🇷 Iran
+</div>
+
+
+<div class="match">
+🏴 England VS 🇪🇬 Egypt
+</div>
+
+
+<div class="match">
+🇮🇷 Iran VS 🇪🇬 Egypt
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="group">
+
+
+<h2>Group D</h2>
+
+
+<div class="match">
+🇪🇸 Spain VS 🇮🇹 Italy
+</div>
+
+
+<div class="match">
+🇪🇸 Spain VS 🇨🇳 China
+</div>
+
+
+<div class="match">
+🇪🇸 Spain VS 🇶🇦 Qatar
+</div>
+
+
+<div class="match">
+🇮🇹 Italy VS 🇨🇳 China
+</div>
+
+
+<div class="match">
+🇮🇹 Italy VS 🇶🇦 Qatar
+</div>
+
+
+<div class="match">
+🇨🇳 China VS 🇶🇦 Qatar
+</div>
+
+
+</div><div class="group">
+
+
+<h2>Group E</h2>
+
+
+<div class="match">
+🇳🇱 Netherlands VS 🇧🇪 Belgium
+</div>
+
+
+<div class="match">
+🇳🇱 Netherlands VS 🇯🇵 Japan
+</div>
+
+
+<div class="match">
+🇳🇱 Netherlands VS 🇰🇷 South Korea
+</div>
+
+
+<div class="match">
+🇧🇪 Belgium VS 🇯🇵 Japan
+</div>
+
+
+<div class="match">
+🇧🇪 Belgium VS 🇰🇷 South Korea
+</div>
+
+
+<div class="match">
+🇯🇵 Japan VS 🇰🇷 South Korea
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="group">
+
+
+<h2>Group F</h2>
+
+
+<div class="match">
+🇭🇷 Croatia VS 🇺🇾 Uruguay
+</div>
+
+
+<div class="match">
+🇭🇷 Croatia VS 🇲🇦 Morocco
+</div>
+
+
+<div class="match">
+🇭🇷 Croatia VS 🇸🇳 Senegal
+</div>
+
+
+<div class="match">
+🇺🇾 Uruguay VS 🇲🇦 Morocco
+</div>
+
+
+<div class="match">
+🇺🇾 Uruguay VS 🇸🇳 Senegal
+</div>
+
+
+<div class="match">
+🇲🇦 Morocco VS 🇸🇳 Senegal
+</div>
+
+
+</div><div class="group">
+
+
+<h2>Group G</h2>
+
+
+<div class="match">
+🇨🇴 Colombia VS 🇨🇭 Switzerland
+</div>
+
+
+<div class="match">
+🇨🇴 Colombia VS 🇵🇱 Poland
+</div>
+
+
+<div class="match">
+🇨🇴 Colombia VS 🇩🇰 Denmark
+</div>
+
+
+<div class="match">
+🇨🇭 Switzerland VS 🇵🇱 Poland
+</div>
+
+
+<div class="match">
+🇨🇭 Switzerland VS 🇩🇰 Denmark
+</div>
+
+
+<div class="match">
+🇵🇱 Poland VS 🇩🇰 Denmark
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="group">
+
+
+<h2>Group H</h2>
+
+
+<div class="match">
+🇺🇸 USA VS 🇹🇷 Turkey
+</div>
+
+
+<div class="match">
+🇺🇸 USA VS 🇷🇸 Serbia
+</div>
+
+
+<div class="match">
+🇺🇸 USA VS 🇺🇦 Ukraine
+</div>
+
+
+<div class="match">
+🇹🇷 Turkey VS 🇷🇸 Serbia
+</div>
+
+
+<div class="match">
+🇹🇷 Turkey VS 🇺🇦 Ukraine
+</div>
+
+
+<div class="match">
+🇷🇸 Serbia VS 🇺🇦 Ukraine
+</div>
+
+
+</div>
+
+
+
+
+</div>
+
+
 </body>
+
+
 </html>

@@ -1,81 +1,220 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
-<title>DLS Points Table</title>
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>DLS World Cup Points Table</title>
+
 
 <style>
 
-body{
-font-family:Arial;
-background:#0b132b;
-color:white;
-text-align:center;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
 }
+
+
+body{
+
+background:
+linear-gradient(135deg,#020617,#1e3a8a,#020617);
+
+color:white;
+
+padding:20px;
+
+min-height:100vh;
+
+}
+
+
+
+.container{
+
+max-width:1100px;
+
+margin:auto;
+
+}
+
+
+
+h1{
+
+text-align:center;
+
+font-size:40px;
+
+margin-bottom:30px;
+
+text-shadow:0 0 20px #38bdf8;
+
+}
+
+
+
+.group{
+
+margin-bottom:35px;
+
+}
+
+
+
+.group h2{
+
+text-align:center;
+
+padding:15px;
+
+border-radius:18px;
+
+background:
+linear-gradient(135deg,#2563eb,#9333ea);
+
+margin-bottom:15px;
+
+}
+
+
 
 table{
-width:95%;
-margin:20px auto;
+
+width:100%;
+
 border-collapse:collapse;
-background:#1c2541;
+
+background:rgba(255,255,255,.1);
+
+border-radius:15px;
+
+overflow:hidden;
+
 }
 
-th,td{
-border:1px solid white;
-padding:8px;
+
+
+th{
+
+background:#2563eb;
+
+padding:12px;
+
 }
 
-h2{
-background:#3a506b;
+
+
+td{
+
 padding:10px;
+
+text-align:center;
+
+border-bottom:1px solid rgba(255,255,255,.2);
+
 }
+
+
+
+tr:hover{
+
+background:rgba(56,189,248,.2);
+
+}
+
+
+
+.team{
+
+text-align:left;
+
+font-weight:bold;
+
+}
+
+
+
+.pts{
+
+color:#facc15;
+
+font-weight:bold;
+
+}
+
+
 
 </style>
 
+
 </head>
+
 
 <body>
 
-<h1>🏆 Points Table</h1>
+
+<div class="container">
+
+
+<h1>🏆 DLS World Cup Points Table</h1>
+
 
 <div id="tables"></div>
 
 
+
 <script>
 
-let groups={
 
-"A":["Argentina","Germany","Canada","Saudi Arabia"],
+const groups={
 
-"B":["Brazil","Portugal","Nigeria","Australia"],
 
-"C":["France","England","Iran","Egypt"],
+A:["Argentina","Germany","Canada","Saudi Arabia"],
 
-"D":["Spain","Italy","China","Qatar"],
+B:["Brazil","Portugal","Nigeria","Australia"],
 
-"E":["Netherlands","Belgium","Japan","South Korea"],
+C:["France","England","Iran","Egypt"],
 
-"F":["Croatia","Uruguay","Morocco","Senegal"],
+D:["Spain","Italy","China","Qatar"],
 
-"G":["Colombia","Switzerland","Poland","Denmark"],
+E:["Netherlands","Belgium","Japan","South Korea"],
 
-"H":["USA","Turkey","Serbia","Ukraine"]
+F:["Croatia","Uruguay","Morocco","Senegal"],
+
+G:["Colombia","Switzerland","Poland","Denmark"],
+
+H:["USA","Turkey","Serbia","Ukraine"]
+
 
 };
 
 
 
+
+// CREATE DATA
+
+
 let table={};
+
 
 
 for(let g in groups){
 
+
 table[g]={};
+
 
 groups[g].forEach(team=>{
 
+
 table[g][team]={
+
 p:0,
 w:0,
 d:0,
@@ -83,16 +222,30 @@ l:0,
 gf:0,
 ga:0,
 pts:0
+
 };
 
+
 });
+
 
 }
 
 
-// Admin Result
 
-let results=JSON.parse(localStorage.groupResults || "[]");
+
+// GET ADMIN RESULT
+
+
+let results=
+
+JSON.parse(
+
+localStorage.getItem("groupResults") || "[]"
+
+);
+
+
 
 
 
@@ -101,7 +254,9 @@ results.forEach(r=>{
 
 let teams=r.match.split(" vs ");
 
+
 let score=r.score.split("-");
+
 
 
 let t1=teams[0].trim();
@@ -109,123 +264,140 @@ let t1=teams[0].trim();
 let t2=teams[1].trim();
 
 
-let g1=Number(score[0]);
 
-let g2=Number(score[1]);
-
-
-let group;
+let g="";
 
 
-for(let g in groups){
 
-if(groups[g].includes(t1)){
+for(let x in groups){
 
-group=g;
-break;
+
+if(groups[x].includes(t1)){
+
+g=x;
 
 }
 
 }
 
 
-if(!group)return;
+
+if(!g) return;
 
 
 
-let a=table[group][t1];
+let a=table[g][t1];
 
-let b=table[group][t2];
+let b=table[g][t2];
+
+
+
+if(!a || !b) return;
+
+
+
+let s1=Number(score[0]);
+
+let s2=Number(score[1]);
+
+
 
 
 a.p++;
+
 b.p++;
 
 
-a.gf+=g1;
-a.ga+=g2;
+
+a.gf+=s1;
+
+a.ga+=s2;
 
 
-b.gf+=g2;
-b.ga+=g1;
+b.gf+=s2;
+
+b.ga+=s1;
 
 
 
-if(g1>g2){
+if(s1>s2){
+
 
 a.w++;
+
 a.pts+=3;
+
 b.l++;
+
 
 }
 
-else if(g2>g1){
+else if(s2>s1){
+
 
 b.w++;
+
 b.pts+=3;
+
 a.l++;
+
 
 }
 
 else{
 
+
 a.d++;
+
 b.d++;
 
 a.pts++;
+
 b.pts++;
 
+
 }
+
 
 
 });
 
 
 
+
+
+
+
+// DISPLAY
 
 
 let html="";
 
 
+
 for(let g in groups){
 
 
-// LIVE RANKING
-
-groups[g].sort((a,b)=>{
+let teams=[...groups[g]];
 
 
-let A=table[g][a];
 
-let B=table[g][b];
+teams.sort((x,y)=>{
 
 
-// Point বেশি আগে
+let A=table[g][x];
 
-if(B.pts!==A.pts){
+let B=table[g][y];
+
+
+
+if(B.pts!=A.pts)
 
 return B.pts-A.pts;
 
-}
 
 
-// Goal Difference
-
-let difA=A.gf-A.ga;
-
-let difB=B.gf-B.ga;
-
-
-if(difB!==difA){
-
-return difB-difA;
-
-}
-
-
-// Goal For
-
-return B.gf-A.gf;
+return (B.gf-B.ga)-(A.gf-A.ga);
 
 
 });
@@ -233,37 +405,48 @@ return B.gf-A.gf;
 
 
 
-html+=`<h2>Group ${g}</h2>`;
-
-
-
 html+=`
+
+<div class="group">
+
+<h2>Group ${g}</h2>
+
 
 <table>
 
 <tr>
 
 <th>Pos</th>
+
 <th>Team</th>
+
 <th>P</th>
+
 <th>W</th>
+
 <th>D</th>
+
 <th>L</th>
-<th>+</th>
-<th>-</th>
-<th>Dif</th>
-<th>Pts</th>
+
+<th>GF</th>
+
+<th>GA</th>
+
+<th>GD</th>
+
+<th>PTS</th>
 
 </tr>
+
 
 `;
 
 
 
-groups[g].forEach((team,i)=>{
+teams.forEach((team,i)=>{
 
 
-let x=table[g][team];
+let t=table[g][team];
 
 
 html+=`
@@ -272,34 +455,42 @@ html+=`
 
 <td>${i+1}</td>
 
-<td>${team}</td>
+<td class="team">${team}</td>
 
-<td>${x.p}</td>
+<td>${t.p}</td>
 
-<td>${x.w}</td>
+<td>${t.w}</td>
 
-<td>${x.d}</td>
+<td>${t.d}</td>
 
-<td>${x.l}</td>
+<td>${t.l}</td>
 
-<td>${x.gf}</td>
+<td>${t.gf}</td>
 
-<td>${x.ga}</td>
+<td>${t.ga}</td>
 
-<td>${x.gf-x.ga}</td>
+<td>${t.gf-t.ga}</td>
 
-<td>${x.pts}</td>
-
+<td class="pts">${t.pts}</td>
 
 </tr>
 
 `;
 
 
+
 });
 
 
-html+="</table>";
+
+html+=`
+
+</table>
+
+</div>
+
+`;
+
 
 
 }
@@ -309,7 +500,11 @@ html+="</table>";
 document.getElementById("tables").innerHTML=html;
 
 
+
 </script>
+
+
+</div>
 
 
 </body>

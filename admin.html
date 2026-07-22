@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
 
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>DLS Admin Panel</title>
+<title>DLS Premium Admin Panel</title>
 
 <style>
 
@@ -13,93 +13,98 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial;
+font-family:Arial,sans-serif;
 }
 
 body{
-
-background:#0b132b;
-color:white;
+background:linear-gradient(135deg,#020617,#0f172a,#1e3a8a,#020617);
+background-size:400% 400%;
+animation:bgMove 12s infinite;
+color:#fff;
 padding:20px;
+min-height:100vh;
+}
+
+@keyframes bgMove{
+
+0%{background-position:0% 50%;}
+
+50%{background-position:100% 50%;}
+
+100%{background-position:0% 50%;}
 
 }
 
 .box{
-
-background:#1c2541;
 width:95%;
-max-width:900px;
-margin:20px auto;
-padding:20px;
-border-radius:15px;
-
+max-width:950px;
+margin:25px auto;
+padding:25px;
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(18px);
+border-radius:25px;
+border:1px solid rgba(255,255,255,.15);
+box-shadow:0 15px 40px rgba(0,0,0,.5);
 }
 
 h1{
-
-margin-bottom:15px;
-
+text-align:center;
+font-size:35px;
+margin-bottom:20px;
+text-shadow:0 0 20px #38bdf8;
 }
 
 h2{
-
-margin:15px 0;
-
+text-align:center;
+margin:20px 0;
+color:#7dd3fc;
 }
 
 select,
 input,
 button{
-
 width:100%;
-padding:12px;
+padding:14px;
 margin:8px 0;
 border:none;
-border-radius:8px;
+border-radius:14px;
 font-size:16px;
-
 }
 
 button{
-
-background:#3a86ff;
-color:white;
+background:linear-gradient(135deg,#2563eb,#9333ea);
+color:#fff;
 font-weight:bold;
 cursor:pointer;
-
+transition:.3s;
 }
 
 button:hover{
-
-background:#2563eb;
-
+transform:translateY(-3px);
+box-shadow:0 0 25px #00bfff;
 }
 
 .result{
-
-background:#3a506b;
-padding:12px;
-margin-top:10px;
-border-radius:10px;
-
+margin-top:15px;
+padding:18px;
+border-radius:18px;
+background:linear-gradient(135deg,#1d4ed8,#2563eb);
+box-shadow:0 8px 25px rgba(0,0,0,.4);
 }
 
 .edit{
-
-background:#16a34a;
-
+background:linear-gradient(135deg,#16a34a,#22c55e);
 }
 
 .delete{
-
-background:#dc2626;
-
+background:linear-gradient(135deg,#dc2626,#ef4444);
 }
 
 hr{
-
-margin:25px 0;
-
+margin:30px 0;
+border:none;
+height:2px;
+background:rgba(255,255,255,.2);
 }
 
 </style>
@@ -135,20 +140,12 @@ margin:25px 0;
 
 </select>
 
-<input
-id="goal1"
-type="number"
-placeholder="Team 1 Goal">
+<input id="goal1" type="number" placeholder="Team 1 Goal">
 
-<input
-id="goal2"
-type="number"
-placeholder="Team 2 Goal">
+<input id="goal2" type="number" placeholder="Team 2 Goal">
 
 <button onclick="saveGroupResult()">
-
 💾 Save Group Result
-
 </button>
 
 <h2>📋 Group Results</h2>
@@ -165,15 +162,9 @@ placeholder="Team 2 Goal">
 <option>Select Match</option>
 </select>
 
-<input
-id="r16g1"
-type="number"
-placeholder="Team 1 Goal">
+<input id="r16g1" type="number" placeholder="Team 1 Goal">
 
-<input
-id="r16g2"
-type="number"
-placeholder="Team 2 Goal">
+<input id="r16g2" type="number" placeholder="Team 2 Goal">
 
 <button onclick="saveRound16()">
 💾 Save Round of 16
@@ -187,15 +178,9 @@ placeholder="Team 2 Goal">
 <option>Select Quarter Final</option>
 </select>
 
-<input
-id="qfg1"
-type="number"
-placeholder="Team 1 Goal">
+<input id="qfg1" type="number" placeholder="Team 1 Goal">
 
-<input
-id="qfg2"
-type="number"
-placeholder="Team 2 Goal">
+<input id="qfg2" type="number" placeholder="Team 2 Goal">
 
 <button onclick="saveQuarterFinal()">
 💾 Save Quarter Final
@@ -209,15 +194,9 @@ placeholder="Team 2 Goal">
 <option>Select Semi Final</option>
 </select>
 
-<input
-id="sfg1"
-type="number"
-placeholder="Team 1 Goal">
+<input id="sfg1" type="number" placeholder="Team 1 Goal">
 
-<input
-id="sfg2"
-type="number"
-placeholder="Team 2 Goal">
+<input id="sfg2" type="number" placeholder="Team 2 Goal">
 
 <button onclick="saveSemiFinal()">
 💾 Save Semi Final
@@ -225,21 +204,15 @@ placeholder="Team 2 Goal">
 
 <hr>
 
-<h2>🏆 Final</h2>
+<h2>👑 Final</h2>
 
 <select id="finalmatch">
 <option>Select Final</option>
 </select>
 
-<input
-id="fg1"
-type="number"
-placeholder="Team 1 Goal">
+<input id="fg1" type="number" placeholder="Team 1 Goal">
 
-<input
-id="fg2"
-type="number"
-placeholder="Team 2 Goal">
+<input id="fg2" type="number" placeholder="Team 2 Goal">
 
 <button onclick="saveFinalMatch()">
 💾 Save Final
@@ -253,9 +226,9 @@ placeholder="Team 2 Goal">
 
 <script>
 
-let editIndex=-1;
+let editIndex = -1;
 
-let matches={"Group A":[
+let matches = {"Group A":[
 "Argentina vs Germany",
 "Argentina vs Canada",
 "Argentina vs Saudi Arabia",
@@ -326,9 +299,7 @@ let matches={"Group A":[
 "Turkey vs Ukraine",
 "Serbia vs Ukraine"
 ]
-
 };
-
 
 group.onchange=function(){
 
@@ -344,9 +315,16 @@ match.appendChild(option);
 
 });
 
-};function saveGroupResult(){
+};// ===============================
+// SAVE GROUP RESULT
+// ===============================
 
-let data=JSON.parse(localStorage.groupResults||"[]");
+function saveGroupResult(){
+
+let data=
+JSON.parse(
+localStorage.groupResults || "[]"
+);
 
 let result={
 
@@ -356,10 +334,11 @@ score:goal1.value+" - "+goal2.value
 
 };
 
+let index=data.findIndex(x=>
 
-// একই ম্যাচ ২ বার Save হবে না
+x.match==result.match
 
-let index=data.findIndex(x=>x.match===result.match);
+);
 
 if(index>=0){
 
@@ -371,7 +350,8 @@ data.push(result);
 
 }
 
-localStorage.groupResults=JSON.stringify(data);
+localStorage.groupResults=
+JSON.stringify(data);
 
 loadRound16Matches();
 
@@ -379,23 +359,17 @@ showGroup();
 
 alert("Group Result Saved ✅");
 
-}
+}function showGroup(){
 
+let data = JSON.parse(localStorage.groupResults || "[]");
 
+let box = document.getElementById("groupList");
 
-
-function showGroup(){
-
-let data=JSON.parse(localStorage.groupResults||"[]");
-
-let box=document.getElementById("groupList");
-
-box.innerHTML="";
-
+box.innerHTML = "";
 
 data.forEach((r,i)=>{
 
-box.innerHTML+=`
+box.innerHTML += `
 
 <div class="result">
 
@@ -403,22 +377,18 @@ box.innerHTML+=`
 
 <br>
 
-Score : ${r.score}
+⚽ Score : ${r.score}
 
 <br><br>
 
 <button class="edit"
 onclick="editGroup(${i})">
-
 ✏️ Edit
-
 </button>
 
 <button class="delete"
 onclick="deleteGroup(${i})">
-
 🗑 Delete
-
 </button>
 
 </div>
@@ -429,244 +399,89 @@ onclick="deleteGroup(${i})">
 
 }
 
-
-
-
 function editGroup(i){
 
-let data=JSON.parse(localStorage.groupResults||"[]");
+let data = JSON.parse(localStorage.groupResults || "[]");
 
-let r=data[i];
+let r = data[i];
 
-let s=r.score.split("-");
+let score = r.score.split("-");
 
-goal1.value=s[0].trim();
+goal1.value = score[0].trim();
+goal2.value = score[1].trim();
 
-goal2.value=s[1].trim();
-
-match.value=r.match;
+match.value = r.match;
 
 }
-
-
-
 
 function deleteGroup(i){
 
-let data=JSON.parse(localStorage.groupResults||"[]");
+let data = JSON.parse(localStorage.groupResults || "[]");
 
 data.splice(i,1);
 
-localStorage.groupResults=JSON.stringify(data);
-
-loadRound16Matches();
+localStorage.groupResults = JSON.stringify(data);
 
 showGroup();
 
-}// ===============================
-// Round of 16 Auto Generate
-// ===============================
+loadRound16Matches();
+
+alert("Deleted ✅");
+
+}function getWinner(match,score){
+
+let teams = match.split(" vs ");
+
+let goals = score.split("-");
+
+let g1 = Number(goals[0]);
+
+let g2 = Number(goals[1]);
+
+if(g1>g2){
+return teams[0].trim();
+}
+
+if(g2>g1){
+return teams[1].trim();
+}
+
+return "";
+
+}
+
+// ===========================
+// LOAD ROUND OF 16
+// ===========================
 
 function loadRound16Matches(){
 
-let groups={
+let list = JSON.parse(localStorage.r16Matches || "[]");
 
-"A":["Argentina","Germany","Canada","Saudi Arabia"],
-"B":["Brazil","Portugal","Nigeria","Australia"],
-"C":["France","England","Iran","Egypt"],
-"D":["Spain","Italy","China","Qatar"],
-"E":["Netherlands","Belgium","Japan","South Korea"],
-"F":["Croatia","Uruguay","Morocco","Senegal"],
-"G":["Colombia","Switzerland","Poland","Denmark"],
-"H":["USA","Turkey","Serbia","Ukraine"]
+let select = document.getElementById("r16match");
 
-};
+select.innerHTML = "<option>Select Match</option>";
 
+list.forEach(function(m){
 
+let option = document.createElement("option");
 
-let table={};
-
-
-
-for(let g in groups){
-
-table[g]={};
-
-groups[g].forEach(team=>{
-
-table[g][team]={
-
-pts:0,
-gf:0,
-ga:0
-
-};
-
-});
-
-}
-
-
-
-let results=JSON.parse(localStorage.groupResults||"[]");
-
-
-
-results.forEach(r=>{
-
-let teams=r.match.split(" vs ");
-
-let score=r.score.split("-");
-
-
-let t1=teams[0].trim();
-
-let t2=teams[1].trim();
-
-
-let g1=Number(score[0]);
-
-let g2=Number(score[1]);
-
-
-let group="";
-
-
-for(let x in groups){
-
-if(groups[x].includes(t1)){
-
-group=x;
-
-break;
-
-}
-
-}
-
-
-if(group=="") return;
-
-
-table[group][t1].gf+=g1;
-table[group][t1].ga+=g2;
-
-table[group][t2].gf+=g2;
-table[group][t2].ga+=g1;
-
-
-if(g1>g2){
-
-table[group][t1].pts+=3;
-
-}
-
-else if(g2>g1){
-
-table[group][t2].pts+=3;
-
-}
-
-else{
-
-table[group][t1].pts++;
-
-table[group][t2].pts++;
-
-}
-
-});// ===============================
-// Group Ranking
-// ===============================
-
-let rank={};
-
-for(let g in groups){
-
-rank[g]=[...groups[g]].sort((a,b)=>{
-
-let A=table[g][a];
-let B=table[g][b];
-
-// Points
-if(B.pts!=A.pts)
-return B.pts-A.pts;
-
-// Goal Difference
-let gdA=A.gf-A.ga;
-let gdB=B.gf-B.ga;
-
-if(gdB!=gdA)
-return gdB-gdA;
-
-// Goals For
-if(B.gf!=A.gf)
-return B.gf-A.gf;
-
-// Alphabet
-return a.localeCompare(b);
-
-});
-
-}
-
-
-
-// ===============================
-// Round of 16 Match List
-// ===============================
-
-let list=[
-
-rank.A[0]+" vs "+rank.B[1],
-rank.B[0]+" vs "+rank.A[1],
-
-rank.C[0]+" vs "+rank.D[1],
-rank.D[0]+" vs "+rank.C[1],
-
-rank.E[0]+" vs "+rank.F[1],
-rank.F[0]+" vs "+rank.E[1],
-
-rank.G[0]+" vs "+rank.H[1],
-rank.H[0]+" vs "+rank.G[1]
-
-];
-
-
-
-// Save Match List
-
-localStorage.r16Matches=
-JSON.stringify(list);
-
-
-
-// Load Dropdown
-
-let select=
-document.getElementById("r16match");
-
-select.innerHTML=
-"<option>Select Match</option>";
-
-list.forEach(match=>{
-
-let option=
-document.createElement("option");
-
-option.textContent=match;
+option.textContent = m;
 
 select.appendChild(option);
 
 });
 
-  }// ===============================
-// Save Round of 16 Result
-// ===============================
+}// ===========================
+// SAVE ROUND OF 16
+// ===========================
 
 function saveRound16(){
 
-let data=JSON.parse(localStorage.knockoutResults||"[]");
+let data =
+JSON.parse(
+localStorage.knockoutResults || "[]"
+);
 
 let result={
 
@@ -678,17 +493,15 @@ score:r16g1.value+" - "+r16g2.value
 
 };
 
-
-// Duplicate Update
-
 let index=data.findIndex(x=>
 
-x.round=="Round of 16" &&
+x.round=="Round of 16"
+
+&&
 
 x.match==result.match
 
 );
-
 
 if(index>=0){
 
@@ -700,11 +513,8 @@ data.push(result);
 
 }
 
-
 localStorage.knockoutResults=
-
 JSON.stringify(data);
-
 
 showKnockout();
 
@@ -712,84 +522,40 @@ generateQuarterFinal();
 
 alert("Round of 16 Saved ✅");
 
-}
-
-
-
-
-// ===============================
-// Winner Function
-// ===============================
-
-function getWinner(match,score){
-
-let teams=match.split(" vs ");
-
-let s=score.split("-");
-
-let g1=Number(s[0]);
-
-let g2=Number(s[1]);
-
-
-if(g1>g2){
-
-return teams[0].trim();
-
-}
-
-else if(g2>g1){
-
-return teams[1].trim();
-
-}
-
-else{
-
-return "";
-
-}
-
-}// ===============================
-// Quarter Final Auto Generate
-// ===============================
+}// ===========================
+// GENERATE QUARTER FINAL
+// ===========================
 
 function generateQuarterFinal(){
 
-let data=JSON.parse(localStorage.knockoutResults||"[]");
+let data =
+JSON.parse(
+localStorage.knockoutResults || "[]"
+);
 
 let winners=[];
-
-
-// Round of 16 Winners
 
 data.forEach(r=>{
 
 if(r.round=="Round of 16"){
 
-let winner=getWinner(r.match,r.score);
+let w =
+getWinner(
+r.match,
+r.score
+);
 
-if(winner!=""){
-
-winners.push(winner);
-
+if(w!=""){
+winners.push(w);
 }
 
 }
 
 });
 
-
-// সব ৮ Winner না হলে Stop
-
 if(winners.length<8){
-
 return;
-
 }
-
-
-// Quarter Final Match
 
 let qf=[
 
@@ -803,44 +569,36 @@ winners[6]+" vs "+winners[7]
 
 ];
 
-
-// Save Match List
-
 localStorage.qfMatches=
-
 JSON.stringify(qf);
 
-
-// Load Dropdown
-
-let select=
-
+let select =
 document.getElementById("qfmatch");
 
-select.innerHTML=
-
+select.innerHTML =
 "<option>Select Quarter Final</option>";
 
+qf.forEach(m=>{
 
-qf.forEach(match=>{
-
-let option=
-
+let option =
 document.createElement("option");
 
-option.textContent=match;
+option.textContent = m;
 
 select.appendChild(option);
 
 });
 
-}// ===============================
-// Save Quarter Final Result
-// ===============================
+}// ===========================
+// SAVE QUARTER FINAL
+// ===========================
 
 function saveQuarterFinal(){
 
-let data=JSON.parse(localStorage.knockoutResults||"[]");
+let data =
+JSON.parse(
+localStorage.knockoutResults || "[]"
+);
 
 let result={
 
@@ -852,17 +610,15 @@ score:qfg1.value+" - "+qfg2.value
 
 };
 
-
-// Duplicate Check
-
 let index=data.findIndex(x=>
 
-x.round=="Quarter Final" &&
+x.round=="Quarter Final"
+
+&&
 
 x.match==result.match
 
 );
-
 
 if(index>=0){
 
@@ -874,10 +630,8 @@ data.push(result);
 
 }
 
-
 localStorage.knockoutResults=
 JSON.stringify(data);
-
 
 showKnockout();
 
@@ -885,51 +639,40 @@ generateSemiFinal();
 
 alert("Quarter Final Saved ✅");
 
-}
-
-
-
-
-// ===============================
-// Semi Final Auto Generate
+}// ===============================
+// GENERATE SEMI FINAL
 // ===============================
 
 function generateSemiFinal(){
 
-let data=JSON.parse(localStorage.knockoutResults||"[]");
+let data=
+JSON.parse(
+localStorage.knockoutResults || "[]"
+);
 
 let winners=[];
-
-
-// Quarter Final Winners
 
 data.forEach(r=>{
 
 if(r.round=="Quarter Final"){
 
-let winner=getWinner(r.match,r.score);
+let w=
+getWinner(
+r.match,
+r.score
+);
 
-if(winner!=""){
-
-winners.push(winner);
-
+if(w!=""){
+winners.push(w);
 }
 
 }
 
 });
 
-
-// সব ৪ Winner না হলে Stop
-
 if(winners.length<4){
-
 return;
-
 }
-
-
-// Semi Final Match
 
 let sf=[
 
@@ -939,14 +682,8 @@ winners[2]+" vs "+winners[3]
 
 ];
 
-
-// Save Match List
-
 localStorage.sfMatches=
 JSON.stringify(sf);
-
-
-// Load Dropdown
 
 let select=
 document.getElementById("sfmatch");
@@ -954,25 +691,27 @@ document.getElementById("sfmatch");
 select.innerHTML=
 "<option>Select Semi Final</option>";
 
-
-sf.forEach(match=>{
+sf.forEach(m=>{
 
 let option=
 document.createElement("option");
 
-option.textContent=match;
+option.textContent=m;
 
 select.appendChild(option);
 
 });
 
 }// ===============================
-// Save Semi Final Result
+// SAVE SEMI FINAL
 // ===============================
 
 function saveSemiFinal(){
 
-let data=JSON.parse(localStorage.knockoutResults||"[]");
+let data=
+JSON.parse(
+localStorage.knockoutResults || "[]"
+);
 
 let result={
 
@@ -984,17 +723,15 @@ score:sfg1.value+" - "+sfg2.value
 
 };
 
-
-// Duplicate Check
-
 let index=data.findIndex(x=>
 
-x.round=="Semi Final" &&
+x.round=="Semi Final"
+
+&&
 
 x.match==result.match
 
 );
-
 
 if(index>=0){
 
@@ -1006,10 +743,8 @@ data.push(result);
 
 }
 
-
 localStorage.knockoutResults=
 JSON.stringify(data);
-
 
 showKnockout();
 
@@ -1017,51 +752,40 @@ generateFinal();
 
 alert("Semi Final Saved ✅");
 
-}
-
-
-
-
-// ===============================
-// Final Auto Generate
+}// ===============================
+// GENERATE FINAL
 // ===============================
 
 function generateFinal(){
 
-let data=JSON.parse(localStorage.knockoutResults||"[]");
+let data=
+JSON.parse(
+localStorage.knockoutResults || "[]"
+);
 
 let winners=[];
-
-
-// Semi Final Winners
 
 data.forEach(r=>{
 
 if(r.round=="Semi Final"){
 
-let winner=getWinner(r.match,r.score);
+let w=
+getWinner(
+r.match,
+r.score
+);
 
-if(winner!=""){
-
-winners.push(winner);
-
+if(w!=""){
+winners.push(w);
 }
 
 }
 
 });
 
-
-// দুই Winner না হলে Stop
-
 if(winners.length<2){
-
 return;
-
 }
-
-
-// Final Match
 
 let finalMatch=[
 
@@ -1069,14 +793,8 @@ winners[0]+" vs "+winners[1]
 
 ];
 
-
-// Save
-
 localStorage.finalMatches=
 JSON.stringify(finalMatch);
-
-
-// Load Dropdown
 
 let select=
 document.getElementById("finalmatch");
@@ -1084,25 +802,27 @@ document.getElementById("finalmatch");
 select.innerHTML=
 "<option>Select Final</option>";
 
-
-finalMatch.forEach(match=>{
+finalMatch.forEach(m=>{
 
 let option=
 document.createElement("option");
 
-option.textContent=match;
+option.textContent=m;
 
 select.appendChild(option);
 
 });
 
 }// ===============================
-// Save Final Result
+// SAVE FINAL
 // ===============================
 
 function saveFinalMatch(){
 
-let data=JSON.parse(localStorage.knockoutResults||"[]");
+let data=
+JSON.parse(
+localStorage.knockoutResults || "[]"
+);
 
 let result={
 
@@ -1114,17 +834,15 @@ score:fg1.value+" - "+fg2.value
 
 };
 
-
-// Duplicate Check
-
 let index=data.findIndex(x=>
 
-x.round=="Final" &&
+x.round=="Final"
+
+&&
 
 x.match==result.match
 
 );
-
 
 if(index>=0){
 
@@ -1136,42 +854,77 @@ data.push(result);
 
 }
 
-
 localStorage.knockoutResults=
 JSON.stringify(data);
-
 
 showKnockout();
 
 generateChampion();
 
-alert("Final Saved ✅");
+alert("Final Saved 🏆");
 
-}
-
-
-
-// ===============================
-// Champion Generate
+}// ===============================
+// GENERATE CHAMPION
 // ===============================
 
 function generateChampion(){
 
-let data=JSON.parse(localStorage.knockoutResults||"[]");
+let data =
+JSON.parse(
+localStorage.knockoutResults || "[]"
+);
 
-let champion="";
-
+let champion = "";
 
 data.forEach(r=>{
 
 if(r.round=="Final"){
 
-champion=getWinner(r.match,r.score);
+champion = getWinner(
+r.match,
+r.score
+);
 
 }
 
 });
 
+if(champion!=""){
+
+localStorage.setItem(
+"champion",
+champion
+);
+
+}
+
+showChampion();
+
+}// ===============================
+// CHAMPION GENERATE
+// ===============================
+
+function generateChampion(){
+
+let data=
+JSON.parse(
+localStorage.knockoutResults || "[]"
+);
+
+let champion="";
+
+data.forEach(r=>{
+
+if(r.round=="Final"){
+
+champion=getWinner(
+r.match,
+r.score
+);
+
+}
+
+});
 
 if(champion!=""){
 
@@ -1180,41 +933,43 @@ localStorage.champion=champion;
 }
 
 }// ===============================
-// Show Knockout Results
+// SHOW KNOCKOUT RESULTS
 // ===============================
 
 function showKnockout(){
 
-let data=JSON.parse(localStorage.knockoutResults||"[]");
+let data =
+JSON.parse(
+localStorage.knockoutResults || "[]"
+);
 
-let box=document.getElementById("knockoutList");
+let box =
+document.getElementById("knockoutList");
 
-box.innerHTML="";
+box.innerHTML = "";
 
+data.forEach((r,i)=>{
 
-// Round of 16
-
-box.innerHTML+="<h3>⚔️ Round of 16</h3>";
-
-data.filter(x=>x.round=="Round of 16").forEach((r,i)=>{
-
-box.innerHTML+=`
+box.innerHTML += `
 
 <div class="result">
 
-<b>${r.match}</b>
+<b>${r.round}</b>
 
 <br>
 
-Score : ${r.score}
+${r.match}
+
+<br>
+
+⚽ Score : ${r.score}
 
 <br><br>
 
-<button class="delete"
+<button
+class="delete"
 onclick="deleteKnockout(${i})">
-
 🗑 Delete
-
 </button>
 
 </div>
@@ -1223,257 +978,101 @@ onclick="deleteKnockout(${i})">
 
 });
 
-
-// Quarter Final
-
-box.innerHTML+="<h3>🏆 Quarter Final</h3>";
-
-data.filter(x=>x.round=="Quarter Final").forEach((r,i)=>{
-
-box.innerHTML+=`
-
-<div class="result">
-
-<b>${r.match}</b>
-
-<br>
-
-Score : ${r.score}
-
-<br><br>
-
-<button class="delete"
-onclick="deleteKnockout(${i})">
-
-🗑 Delete
-
-</button>
-
-</div>
-
-`;
-
-});
-
-
-// Semi Final
-
-box.innerHTML+="<h3>🔥 Semi Final</h3>";
-
-data.filter(x=>x.round=="Semi Final").forEach((r,i)=>{
-
-box.innerHTML+=`
-
-<div class="result">
-
-<b>${r.match}</b>
-
-<br>
-
-Score : ${r.score}
-
-<br><br>
-
-<button class="delete"
-onclick="deleteKnockout(${i})">
-
-🗑 Delete
-
-</button>
-
-</div>
-
-`;
-
-});
-
-
-// Final
-
-box.innerHTML+="<h3>👑 Final</h3>";
-
-data.filter(x=>x.round=="Final").forEach((r,i)=>{
-
-box.innerHTML+=`
-
-<div class="result">
-
-<b>${r.match}</b>
-
-<br>
-
-Score : ${r.score}
-
-<br><br>
-
-<button class="delete"
-onclick="deleteKnockout(${i})">
-
-🗑 Delete
-
-</button>
-
-</div>
-
-`;
-
-});
+showChampion();
 
 }// ===============================
-// Delete Knockout Result
+// DELETE KNOCKOUT RESULT
 // ===============================
 
-function deleteKnockout(index){
+function deleteKnockout(i){
 
-let data=JSON.parse(localStorage.knockoutResults||"[]");
+let data=
+JSON.parse(
+localStorage.knockoutResults || "[]"
+);
 
-// Delete Result
-data.splice(index,1);
+data.splice(i,1);
 
-localStorage.knockoutResults=JSON.stringify(data);
-
-
-// ===============================
-// Auto Refresh
-// ===============================
+localStorage.knockoutResults=
+JSON.stringify(data);
 
 showKnockout();
 
 generateQuarterFinal();
-
 generateSemiFinal();
-
 generateFinal();
-
 generateChampion();
-
-loadRound16Matches();
 
 alert("Result Deleted ✅");
 
+}// ===============================
+// NEW TOURNAMENT RESET
+// ===============================
+
+function newTournament(){
+
+if(!confirm("Start a New Tournament?")){
+return;
 }
 
+localStorage.removeItem("groupResults");
+localStorage.removeItem("knockoutResults");
+localStorage.removeItem("r16Matches");
+localStorage.removeItem("qfMatches");
+localStorage.removeItem("sfMatches");
+localStorage.removeItem("finalMatches");
+localStorage.removeItem("champion");
 
+alert("New Tournament Started ✅");
+
+location.reload();
+
+}
 
 // ===============================
-// Load Saved Knockout Matches
-// ===============================
-
-function loadSavedKnockout(){
-
-
-// Round of 16
-
-let r16=JSON.parse(localStorage.r16Matches||"[]");
-
-let r16select=document.getElementById("r16match");
-
-r16select.innerHTML="<option>Select Match</option>";
-
-r16.forEach(m=>{
-
-let o=document.createElement("option");
-
-o.textContent=m;
-
-r16select.appendChild(o);
-
-});
-
-
-// Quarter Final
-
-let qf=JSON.parse(localStorage.qfMatches||"[]");
-
-let qfselect=document.getElementById("qfmatch");
-
-qfselect.innerHTML="<option>Select Quarter Final</option>";
-
-qf.forEach(m=>{
-
-let o=document.createElement("option");
-
-o.textContent=m;
-
-qfselect.appendChild(o);
-
-});
-
-
-// Semi Final
-
-let sf=JSON.parse(localStorage.sfMatches||"[]");
-
-let sfselect=document.getElementById("sfmatch");
-
-sfselect.innerHTML="<option>Select Semi Final</option>";
-
-sf.forEach(m=>{
-
-let o=document.createElement("option");
-
-o.textContent=m;
-
-sfselect.appendChild(o);
-
-});
-
-
-// Final
-
-let finals=JSON.parse(localStorage.finalMatches||"[]");
-
-let finalselect=document.getElementById("finalmatch");
-
-finalselect.innerHTML="<option>Select Final</option>";
-
-finals.forEach(m=>{
-
-let o=document.createElement("option");
-
-o.textContent=m;
-
-finalselect.appendChild(o);
-
-});
-
-}// ===============================
-// Champion Show
+// SHOW CHAMPION
 // ===============================
 
 function showChampion(){
 
-let champion=localStorage.getItem("champion")||"";
+let champion = localStorage.getItem("champion") || "";
 
 if(champion=="") return;
 
-let box=document.getElementById("knockoutList");
+let box = document.getElementById("knockoutList");
 
-box.innerHTML+=`
-
+box.innerHTML += `
 <div class="result"
-style="
-margin-top:20px;
-background:gold;
-color:black;
-font-size:22px;
-font-weight:bold;
-">
-
-🏆 Champion<br><br>
-
+style="background:linear-gradient(135deg,#facc15,#f97316);color:black;text-align:center;font-size:24px;font-weight:bold;">
+🏆 WORLD CHAMPION
+<br><br>
 ${champion}
-
 </div>
-
 `;
+
+}// ===============================
+// ADMIN LOGIN
+// ===============================
+
+function checkPassword(){
+
+let pass =
+document.getElementById("adminPass").value;
+
+if(pass=="sayed0909"){
+
+document.getElementById("passwordBox").style.display="none";
+
+}else{
+
+alert("Wrong Password ❌");
 
 }
 
-
+}
 
 // ===============================
-// Page Load
+// PAGE LOAD
 // ===============================
 
 window.onload=function(){
@@ -1482,96 +1081,6 @@ showGroup();
 
 loadRound16Matches();
 
-loadSavedKnockout();
-
-showKnockout();
-
-showChampion();
-
-generateQuarterFinal();
-
-generateSemiFinal();
-
-generateFinal();
-
-generateChampion();
-
-};// ===============================
-// Edit Knockout Result
-// ===============================
-
-function editKnockout(index){
-
-let data=JSON.parse(localStorage.knockoutResults||"[]");
-
-let r=data[index];
-
-let score=r.score.split("-");
-
-
-// Round of 16
-
-if(r.round=="Round of 16"){
-
-r16match.value=r.match;
-
-r16g1.value=score[0].trim();
-
-r16g2.value=score[1].trim();
-
-}
-
-
-// Quarter Final
-
-if(r.round=="Quarter Final"){
-
-qfmatch.value=r.match;
-
-qfg1.value=score[0].trim();
-
-qfg2.value=score[1].trim();
-
-}
-
-
-// Semi Final
-
-if(r.round=="Semi Final"){
-
-sfmatch.value=r.match;
-
-sfg1.value=score[0].trim();
-
-sfg2.value=score[1].trim();
-
-}
-
-
-// Final
-
-if(r.round=="Final"){
-
-finalmatch.value=r.match;
-
-fg1.value=score[0].trim();
-
-fg2.value=score[1].trim();
-
-}
-
-}
-
-
-
-// ===============================
-// Refresh Tournament
-// ===============================
-
-function refreshTournament(){
-
-loadRound16Matches();
-
 generateQuarterFinal();
 
 generateSemiFinal();
@@ -1584,596 +1093,76 @@ showKnockout();
 
 showChampion();
 
-}
-
-
-
-// সব Save Function-এর শেষে
-// refreshTournament();
-// কল করবে।// ===============================
-// Knockout Edit + Delete Button
-// ===============================
-
-function renderKnockout(round){
-
-let data=JSON.parse(localStorage.knockoutResults||"[]");
-
-let html="";
-
-data.forEach((r,i)=>{
-
-if(r.round==round){
-
-html+=`
-
-<div class="result">
-
-<b>${r.match}</b>
-
-<br>
-
-Score : ${r.score}
-
-<br><br>
-
-<button class="edit"
-onclick="editKnockout(${i})">
-
-✏️ Edit
-
-</button>
-
-<button class="delete"
-onclick="deleteKnockout(${i})">
-
-🗑 Delete
-
-</button>
-
-</div>
-
-`;
-
-}
-
-});
-
-return html;
-
-}
-
-
+};
 
 // ===============================
-// New showKnockout()
+// AUTO REFRESH
 // ===============================
 
-function showKnockout(){
-
-let box=document.getElementById("knockoutList");
-
-box.innerHTML=`
-
-<h3>⚔️ Round of 16</h3>
-
-${renderKnockout("Round of 16")}
-
-<h3>🏆 Quarter Final</h3>
-
-${renderKnockout("Quarter Final")}
-
-<h3>🔥 Semi Final</h3>
-
-${renderKnockout("Semi Final")}
-
-<h3>👑 Final</h3>
-
-${renderKnockout("Final")}
-
-`;
-
-showChampion();
-
-}// ===============================
-// Tournament Reset
-// ===============================
-
-function resetTournament(){
-
-if(!confirm("সব Result Delete করতে চান?")){
-return;
-}
-
-
-// Group Stage
-
-localStorage.removeItem("groupResults");
-
-
-// Knockout
-
-localStorage.removeItem("knockoutResults");
-
-
-// Auto Match
-
-localStorage.removeItem("r16Matches");
-localStorage.removeItem("qfMatches");
-localStorage.removeItem("sfMatches");
-localStorage.removeItem("finalMatches");
-
-
-// Champion
-
-localStorage.removeItem("champion");
-
-
-// Input Clear
-
-goal1.value="";
-goal2.value="";
-
-r16g1.value="";
-r16g2.value="";
-
-qfg1.value="";
-qfg2.value="";
-
-sfg1.value="";
-sfg2.value="";
-
-fg1.value="";
-fg2.value="";
-
-group.selectedIndex=0;
-
-match.innerHTML="<option>Select Match</option>";
-
-r16match.innerHTML="<option>Select Match</option>";
-
-qfmatch.innerHTML="<option>Select Quarter Final</option>";
-
-sfmatch.innerHTML="<option>Select Semi Final</option>";
-
-finalmatch.innerHTML="<option>Select Final</option>";
-
-
-// Refresh
+setInterval(function(){
 
 showGroup();
 
 showKnockout();
 
-alert("Tournament Reset Successfully ✅");
+showChampion();
 
-}
-
-
-
-// ===============================
-// Reset Button
-// ===============================
-
-document.body.insertAdjacentHTML(
-
-"beforeend",
-
-`
+},2000);</script>
 
 <div class="box">
 
 <button
-style="background:red"
-onclick="resetTournament()">
-
-🗑 Reset Tournament
-
+onclick="newTournament()"
+style="
+background:linear-gradient(135deg,#dc2626,#b91c1c);
+margin-top:20px;
+">
+🗑 Start New Tournament
 </button>
 
 </div>
 
-`
-
-);// ===============================
-// Auto Backup System
-// ===============================
-
-function backupTournament(){
-
-let backup={
-
-groupResults:
-JSON.parse(localStorage.groupResults||"[]"),
-
-knockoutResults:
-JSON.parse(localStorage.knockoutResults||"[]"),
-
-r16Matches:
-JSON.parse(localStorage.r16Matches||"[]"),
-
-qfMatches:
-JSON.parse(localStorage.qfMatches||"[]"),
-
-sfMatches:
-JSON.parse(localStorage.sfMatches||"[]"),
-
-finalMatches:
-JSON.parse(localStorage.finalMatches||"[]"),
-
-champion:
-localStorage.champion||""
-
-};
-
-localStorage.tournamentBackup=
-JSON.stringify(backup);
-
-}
-
-
-
-// ===============================
-// Auto Restore System
-// ===============================
-
-function restoreTournament(){
-
-let backup=
-localStorage.tournamentBackup;
-
-if(!backup) return;
-
-backup=JSON.parse(backup);
-
-
-localStorage.groupResults=
-JSON.stringify(backup.groupResults);
-
-localStorage.knockoutResults=
-JSON.stringify(backup.knockoutResults);
-
-localStorage.r16Matches=
-JSON.stringify(backup.r16Matches);
-
-localStorage.qfMatches=
-JSON.stringify(backup.qfMatches);
-
-localStorage.sfMatches=
-JSON.stringify(backup.sfMatches);
-
-localStorage.finalMatches=
-JSON.stringify(backup.finalMatches);
-
-localStorage.champion=
-backup.champion;
-
-}
-
-
-
-// ===============================
-// Auto Save
-// ===============================
-
-setInterval(function(){
-
-backupTournament();
-
-},3000);
-
-
-
-// ===============================
-// Auto Restore on Load
-// ===============================
-
-restoreTournament();// ===============================
-// Export Tournament Backup
-// ===============================
-
-function exportBackup(){
-
-let backup={
-
-groupResults:JSON.parse(localStorage.groupResults||"[]"),
-
-knockoutResults:JSON.parse(localStorage.knockoutResults||"[]"),
-
-r16Matches:JSON.parse(localStorage.r16Matches||"[]"),
-
-qfMatches:JSON.parse(localStorage.qfMatches||"[]"),
-
-sfMatches:JSON.parse(localStorage.sfMatches||"[]"),
-
-finalMatches:JSON.parse(localStorage.finalMatches||"[]"),
-
-champion:localStorage.champion||""
-
-};
-
-
-let blob=new Blob(
-
-[JSON.stringify(backup,null,2)],
-
-{type:"application/json"}
-
-);
-
-
-let a=document.createElement("a");
-
-a.href=URL.createObjectURL(blob);
-
-a.download="DLS_Tournament_Backup.json";
-
-a.click();
-
-}
-
-
-
-// ===============================
-// Import Tournament Backup
-// ===============================
-
-function importBackup(file){
-
-let reader=new FileReader();
-
-reader.onload=function(e){
-
-let backup=JSON.parse(e.target.result);
-
-
-localStorage.groupResults=
-JSON.stringify(backup.groupResults||[]);
-
-localStorage.knockoutResults=
-JSON.stringify(backup.knockoutResults||[]);
-
-localStorage.r16Matches=
-JSON.stringify(backup.r16Matches||[]);
-
-localStorage.qfMatches=
-JSON.stringify(backup.qfMatches||[]);
-
-localStorage.sfMatches=
-JSON.stringify(backup.sfMatches||[]);
-
-localStorage.finalMatches=
-JSON.stringify(backup.finalMatches||[]);
-
-localStorage.champion=
-backup.champion||"";
-
-
-refreshTournament();
-
-alert("Backup Restored Successfully ✅");
-
-};
-
-reader.readAsText(file);
-
-}
-
-
-
-// ===============================
-// Backup Buttons
-// ===============================
-
-document.body.insertAdjacentHTML(
-
-"beforeend",
-
-`
-
-<div class="box">
-
-<h2>💾 Tournament Backup</h2>
-
-<button onclick="exportBackup()">
-
-⬇ Export Backup
-
-</button>
-
-<br><br>
-
-<input
-
-type="file"
-
-onchange="importBackup(this.files[0])"
-
->
-
-</div>
-
-`
-
-);// ===============================
-// FINAL INITIALIZATION
-// ===============================
-
-function initializeTournament(){
-
-// Restore Backup
-restoreTournament();
-
-// Group Result
-showGroup();
-
-// Round of 16
-loadRound16Matches();
-
-// Quarter Final
-generateQuarterFinal();
-
-// Semi Final
-generateSemiFinal();
-
-// Final
-generateFinal();
-
-// Champion
-generateChampion();
-showChampion();
-
-// Knockout Result
-showKnockout();
-
-console.log("✅ DLS Tournament Admin Ready");
-
-}
-
-
-
-// ===============================
-// Auto Start
-// ===============================
-
-document.addEventListener("DOMContentLoaded",function(){
-
-initializeTournament();
-
-});
-
-
-
-// ===============================
-// Auto Refresh Every 2 Seconds
-// ===============================
-
-setInterval(function(){
-
-showGroup();
-
-showKnockout();
-
-},2000);
-
-
-
-// ===============================
-// Keyboard Shortcuts
-// ===============================
-
-document.addEventListener("keydown",function(e){
-
-// Ctrl + S = Backup
-
-if(e.ctrlKey && e.key=="s"){
-
-e.preventDefault();
-
-exportBackup();
-
-}
-
-// Ctrl + R = Refresh Tournament
-
-if(e.ctrlKey && e.key=="r"){
-
-e.preventDefault();
-
-refreshTournament();
-
-}
-
-// Ctrl + Delete = Reset Tournament
-
-if(e.ctrlKey && e.key=="Delete"){
-
-e.preventDefault();
-
-resetTournament();
-
-}
-
-});
-
-
-
-// ===============================
-// END
-// ===============================
-
-</script>
-
-</body><div id="passwordBox" style="
+<div id="passwordBox"
+style="
 position:fixed;
 top:0;
 left:0;
 width:100%;
 height:100%;
-background:#0b132b;
+background:#020617;
 display:flex;
 align-items:center;
 justify-content:center;
 z-index:9999;
 ">
 
-<div style="
-background:#1c2541;
+<div
+style="
+background:#1e293b;
 padding:30px;
-border-radius:20px;
+border-radius:25px;
 width:90%;
 max-width:350px;
 text-align:center;
-box-shadow:0 10px 30px black;
+box-shadow:0 0 40px black;
 ">
 
-<h2 style="color:#ffd166;">
+<h2 style="color:#facc15;">
 🔐 Admin Login
 </h2>
 
-<input id="adminPass" type="password" placeholder="Enter Password" style="
-width:100%;
-padding:12px;
-margin:15px 0;
-border-radius:10px;
-border:none;
-font-size:16px;
-">
+<input
+id="adminPass"
+type="password"
+placeholder="Enter Password">
 
-<button onclick="checkPassword()" style="
-width:100%;
-padding:12px;
-border:none;
-border-radius:10px;
-background:#3a86ff;
-color:white;
-font-weight:bold;
-font-size:16px;
-">
+<button onclick="checkPassword()">
 Login
 </button>
 
 </div>
+
 </div>
 
-
-<script>
-
-function checkPassword(){
-
-let pass=document.getElementById("adminPass").value;
-
-if(pass=="sayed0909"){
-
-document.getElementById("passwordBox").style.display="none";
-
-}else{
-
-alert("Wrong Password!");
-
-}
-
-}
-
-</script>
-
+</body>
 </html>

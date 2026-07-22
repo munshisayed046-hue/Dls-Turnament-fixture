@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>DLS World Cup Points Table</title>
-
 
 <style>
 
@@ -19,53 +16,74 @@ box-sizing:border-box;
 font-family:Arial,sans-serif;
 }
 
+html,body{
+width:100%;
+overflow-x:hidden;
+}
 
 body{
 
-background:
-linear-gradient(135deg,#020617,#1e3a8a,#020617);
-
-color:white;
+min-height:100vh;
 
 padding:20px;
 
-min-height:100vh;
+background:
+linear-gradient(
+135deg,
+#020617,
+#0f172a,
+#1e3a8a,
+#020617
+);
+
+background-size:400% 400%;
+animation:bgMove 12s linear infinite;
+
+color:#fff;
 
 }
 
+@keyframes bgMove{
 
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+
+}
 
 .container{
 
+width:100%;
 max-width:1100px;
-
 margin:auto;
 
 }
 
-
-
-h1{
+.title{
 
 text-align:center;
-
-font-size:40px;
-
-margin-bottom:30px;
-
+font-size:42px;
+font-weight:bold;
+margin-bottom:35px;
 text-shadow:0 0 20px #38bdf8;
 
 }
-
-
 
 .group{
 
 margin-bottom:35px;
 
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(16px);
+
+border-radius:22px;
+
+padding:18px;
+
+box-shadow:0 12px 35px rgba(0,0,0,.45);
+
 }
-
-
 
 .group h2{
 
@@ -73,145 +91,116 @@ text-align:center;
 
 padding:15px;
 
-border-radius:18px;
+border-radius:15px;
 
 background:
-linear-gradient(135deg,#2563eb,#9333ea);
+linear-gradient(
+135deg,
+#2563eb,
+#9333ea
+);
 
 margin-bottom:15px;
 
-}
+font-size:30px;
 
-
-
-table{
-
+}table{
 width:100%;
-
 border-collapse:collapse;
-
-background:rgba(255,255,255,.1);
-
-border-radius:15px;
-
 overflow:hidden;
-
+border-radius:18px;
+background:rgba(255,255,255,.06);
 }
-
-
 
 th{
-
-background:#2563eb;
-
-padding:12px;
-
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+padding:13px;
+font-size:15px;
 }
-
-
 
 td{
-
-padding:10px;
-
+padding:12px;
 text-align:center;
-
-border-bottom:1px solid rgba(255,255,255,.2);
-
+border-bottom:1px solid rgba(255,255,255,.15);
+transition:.3s;
 }
-
-
 
 tr:hover{
-
-background:rgba(56,189,248,.2);
-
+background:rgba(56,189,248,.15);
 }
-
-
 
 .team{
-
 text-align:left;
-
 font-weight:bold;
-
+padding-left:12px;
 }
-
-
 
 .pts{
-
 color:#facc15;
-
 font-weight:bold;
-
+font-size:17px;
 }
 
+@media(max-width:768px){
 
+body{
+padding:10px;
+}
+
+.title{
+font-size:30px;
+}
+
+.group h2{
+font-size:24px;
+}
+
+table{
+font-size:12px;
+}
+
+th,td{
+padding:7px 4px;
+}
+
+.team{
+font-size:12px;
+}
+
+}
 
 </style>
 
-
 </head>
-
 
 <body>
 
-
 <div class="container">
 
-
-<h1>🏆 DLS World Cup Points Table</h1>
-
+<h1 class="title">🏆 DLS World Cup Points Table</h1>
 
 <div id="tables"></div>
 
-
-
 <script>
-
 
 const groups={
 
-
 A:["Argentina","Germany","Canada","Saudi Arabia"],
-
 B:["Brazil","Portugal","Nigeria","Australia"],
-
 C:["France","England","Iran","Egypt"],
-
 D:["Spain","Italy","China","Qatar"],
-
 E:["Netherlands","Belgium","Japan","South Korea"],
-
 F:["Croatia","Uruguay","Morocco","Senegal"],
-
 G:["Colombia","Switzerland","Poland","Denmark"],
-
 H:["USA","Turkey","Serbia","Ukraine"]
-
 
 };
 
-
-
-
-// CREATE DATA
-
-
-let table={};
-
-
-
-for(let g in groups){
-
+let table={};for(let g in groups){
 
 table[g]={};
 
-
 groups[g].forEach(team=>{
-
 
 table[g][team]={
 
@@ -225,235 +214,137 @@ pts:0
 
 };
 
-
 });
-
 
 }
 
-
-
-
-// GET ADMIN RESULT
-
-
-let results=
-
-JSON.parse(
-
+const results=JSON.parse(
 localStorage.getItem("groupResults") || "[]"
-
 );
-
-
-
-
 
 results.forEach(r=>{
 
+const teams=r.match.split(" vs ");
 
-let teams=r.match.split(" vs ");
+const score=r.score.split("-");
 
+const team1=teams[0].trim();
+const team2=teams[1].trim();
 
-let score=r.score.split("-");
-
-
-
-let t1=teams[0].trim();
-
-let t2=teams[1].trim();
-
-
-
-let g="";
-
-
-
-for(let x in groups){
-
-
-if(groups[x].includes(t1)){
-
-g=x;
-
-}
-
-}
-
-
-
-if(!g) return;
-
-
-
-let a=table[g][t1];
-
-let b=table[g][t2];
-
-
-
-if(!a || !b) return;
-
-
-
-let s1=Number(score[0]);
-
-let s2=Number(score[1]);
-
-
-
-
-a.p++;
-
-b.p++;
-
-
-
-a.gf+=s1;
-
-a.ga+=s2;
-
-
-b.gf+=s2;
-
-b.ga+=s1;
-
-
-
-if(s1>s2){
-
-
-a.w++;
-
-a.pts+=3;
-
-b.l++;
-
-
-}
-
-else if(s2>s1){
-
-
-b.w++;
-
-b.pts+=3;
-
-a.l++;
-
-
-}
-
-else{
-
-
-a.d++;
-
-b.d++;
-
-a.pts++;
-
-b.pts++;
-
-
-}
-
-
-
-});
-
-
-
-
-
-
-
-// DISPLAY
-
-
-let html="";
-
-
+let group="";
 
 for(let g in groups){
 
+if(groups[g].includes(team1)){
+
+group=g;
+break;
+
+}
+
+}
+
+if(group==="") return;
+
+const A=table[group][team1];
+const B=table[group][team2];
+
+if(!A || !B) return;
+
+const g1=parseInt(score[0]) || 0;
+const g2=parseInt(score[1]) || 0;
+
+A.p++;
+B.p++;
+
+A.gf+=g1;
+A.ga+=g2;
+
+B.gf+=g2;
+B.ga+=g1;
+
+if(g1>g2){
+
+A.w++;
+A.pts+=3;
+B.l++;
+
+}else if(g2>g1){
+
+B.w++;
+B.pts+=3;
+A.l++;
+
+}else{
+
+A.d++;
+B.d++;
+A.pts++;
+B.pts++;
+
+}
+
+});let html="";
+
+for(let g in groups){
 
 let teams=[...groups[g]];
 
+teams.sort((a,b)=>{
 
+let A=table[g][a];
+let B=table[g][b];
 
-teams.sort((x,y)=>{
-
-
-let A=table[g][x];
-
-let B=table[g][y];
-
-
-
-if(B.pts!=A.pts)
-
+if(B.pts!==A.pts)
 return B.pts-A.pts;
 
+let gdA=A.gf-A.ga;
+let gdB=B.gf-B.ga;
 
+if(gdB!==gdA)
+return gdB-gdA;
 
-return (B.gf-B.ga)-(A.gf-A.ga);
+if(B.gf!==A.gf)
+return B.gf-A.gf;
 
+return a.localeCompare(b);
 
 });
-
-
-
 
 html+=`
 
 <div class="group">
 
-<h2>Group ${g}</h2>
-
+<h2>🏆 Group ${g}</h2>
 
 <table>
 
 <tr>
 
 <th>Pos</th>
-
 <th>Team</th>
-
 <th>P</th>
-
 <th>W</th>
-
 <th>D</th>
-
 <th>L</th>
-
 <th>GF</th>
-
 <th>GA</th>
-
 <th>GD</th>
-
 <th>PTS</th>
 
 </tr>
 
-
 `;
 
-
-
-teams.forEach((team,i)=>{
-
+teams.forEach((team,index)=>{
 
 let t=table[g][team];
-
 
 html+=`
 
 <tr>
 
-<td>${i+1}</td>
+<td>${index+1}</td>
 
 <td class="team">${team}</td>
 
@@ -477,13 +368,7 @@ html+=`
 
 `;
 
-
-
-});
-
-
-
-html+=`
+});html+=`
 
 </table>
 
@@ -491,22 +376,19 @@ html+=`
 
 `;
 
-
-
 }
-
-
 
 document.getElementById("tables").innerHTML=html;
 
+// Auto Refresh Every 2 Seconds
 
+setInterval(()=>{
 
-</script>
+location.reload();
 
+},2000);</script>
 
 </div>
 
-
 </body>
-
 </html>

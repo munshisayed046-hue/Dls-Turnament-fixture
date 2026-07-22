@@ -1,110 +1,269 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>DLS World Cup</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
+
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+html,body{
+width:100%;
+height:100%;
+overflow-x:hidden;
 }
 
 body{
-    background:linear-gradient(135deg,#081120,#0b132b,#12305e);
-    background-size:300% 300%;
-    animation:bgMove 10s ease infinite;
-    min-height:100vh;
-    padding:15px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+padding:20px;
+
+min-height:100vh;
+
+background:
+linear-gradient(135deg,#00172d,#002b5b,#004e92,#00172d);
+
+background-size:400% 400%;
+
+animation:bgMove 12s ease infinite;
+
 }
 
 @keyframes bgMove{
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
+
+0%{background-position:0% 50%;}
+
+50%{background-position:100% 50%;}
+
+100%{background-position:0% 50%;}
+
 }
 
 .container{
-    width:100%;
-    min-height:calc(100vh - 30px);
-    background:rgba(28,37,65,.95);
-    border-radius:25px;
-    padding:25px;
-    box-shadow:0 0 30px rgba(0,0,0,.5);
-    text-align:center;
+
+position:relative;
+
+width:100%;
+max-width:430px;
+
+padding:30px;
+
+border-radius:30px;
+
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,.15);
+
+box-shadow:
+
+0 20px 40px rgba(0,0,0,.45);
+
+text-align:center;
+
+overflow:hidden;
+
+}
+
+.container::before{
+
+content:"";
+
+position:absolute;
+
+width:250px;
+height:250px;
+
+background:#00bfff;
+
+border-radius:50%;
+
+top:-120px;
+left:-120px;
+
+filter:blur(80px);
+
+opacity:.20;
+
+}
+
+.container::after{
+
+content:"";
+
+position:absolute;
+
+width:220px;
+height:220px;
+
+background:#00ff95;
+
+border-radius:50%;
+
+bottom:-120px;
+right:-120px;
+
+filter:blur(80px);
+
+opacity:.15;
+
 }
 
 .logo{
-    font-size:70px;
-    animation:float 2s ease-in-out infinite;
+
+font-size:90px;
+
+filter:drop-shadow(0 0 18px gold);
+
+animation:float 3s ease-in-out infinite;
+
+margin-bottom:10px;
+
 }
 
 @keyframes float{
-    50%{
-        transform:translateY(-8px);
-    }
+
+0%,100%{
+
+transform:translateY(0);
+
+}
+
+50%{
+
+transform:translateY(-10px);
+
+}
+
 }
 
 h1{
-    color:#fff;
-    font-size:38px;
-    margin-top:10px;
+
+color:#fff;
+
+font-size:38px;
+
+font-weight:700;
+
+letter-spacing:2px;
+
+text-shadow:0 0 15px #00bfff;
+
 }
 
 .subtitle{
-    color:#ddd;
-    margin:15px 0 30px;
-    font-size:18px;
+
+color:#d7e8ff;
+
+margin:12px 0 28px;
+
+font-size:17px;
+
+}.menu{
+display:flex;
+flex-direction:column;
+gap:16px;
 }
 
 .menu a{
-    display:block;
-    width:100%;
-    padding:18px;
-    margin:14px 0;
-    background:linear-gradient(135deg,#3b82f6,#2563eb);
-    color:#fff;
-    text-decoration:none;
-    border-radius:15px;
-    font-size:20px;
-    font-weight:bold;
-    transition:.3s;
+position:relative;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:18px 22px;
+text-decoration:none;
+color:#fff;
+font-size:19px;
+font-weight:600;
+border-radius:18px;
+background:linear-gradient(135deg,#00b4ff,#0066ff);
+box-shadow:0 8px 20px rgba(0,140,255,.35);
+transition:.3s;
+overflow:hidden;
+}
+
+.menu a::before{
+content:"";
+position:absolute;
+top:0;
+left:-120%;
+width:100%;
+height:100%;
+background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);
+transition:.7s;
+}
+
+.menu a:hover::before{
+left:120%;
 }
 
 .menu a:hover{
-    transform:scale(1.03);
+transform:translateY(-4px) scale(1.02);
+box-shadow:0 12px 30px rgba(0,180,255,.55);
+}
+
+.menu .icon{
+font-size:24px;
+margin-right:12px;
+}
+
+.menu .left{
+display:flex;
+align-items:center;
+}
+
+.menu .arrow{
+font-size:20px;
+opacity:.8;
 }
 
 .footer{
-    margin-top:25px;
-    color:#aaa;
-    font-size:14px;
-}@media (max-width:600px){
-    .container{
-        padding:20px;
-    }
-
-    h1{
-        font-size:32px;
-    }
-
-    .subtitle{
-        font-size:16px;
-    }
-
-    .menu a{
-        font-size:18px;
-        padding:16px;
-    }
-
-    .logo{
-        font-size:60px;
-    }
+margin-top:28px;
+font-size:14px;
+color:#dbeafe;
+letter-spacing:1px;
 }
-</style>
+
+@media(max-width:480px){
+
+.container{
+padding:22px;
+}
+
+.logo{
+font-size:72px;
+}
+
+h1{
+font-size:30px;
+}
+
+.subtitle{
+font-size:15px;
+}
+
+.menu a{
+font-size:17px;
+padding:16px 18px;
+}
+
+}</style>
+
 </head>
 
 <body>
@@ -113,29 +272,162 @@ h1{
 
 <div class="logo">🏆</div>
 
-<h1>DLS World Cup</h1>
+<h1>DLS WORLD CUP</h1>
 
-<p class="subtitle">Welcome to DLS World Cup Tournament</p>
+<p class="subtitle">
+The Ultimate Football Tournament
+</p>
 
 <div class="menu">
 
-<a href="teams.html">⚽ Teams</a>
+<a href="teams.html">
 
-<a href="fixtures.html">🏟️ Fixtures</a>
+<div class="left">
+<span class="icon">⚽</span>
+<span>Teams</span>
+</div>
 
-<a href="table.html">📊 Points Table</a>
+<span class="arrow">➜</span>
 
-<a href="knockout.html">🏆 Knockout</a>
+</a>
 
-<a href="admin.html">⚙️ Admin Panel</a>
+<a href="fixtures.html">
+
+<div class="left">
+<span class="icon">🏟️</span>
+<span>Fixtures</span>
+</div>
+
+<span class="arrow">➜</span>
+
+</a>
+
+<a href="table.html">
+
+<div class="left">
+<span class="icon">📊</span>
+<span>Points Table</span>
+</div>
+
+<span class="arrow">➜</span>
+
+</a>
+
+<a href="knockout.html">
+
+<div class="left">
+<span class="icon">🏆</span>
+<span>Knockout</span>
+</div>
+
+<span class="arrow">➜</span>
+
+</a>
+
+<a href="admin.html">
+
+<div class="left">
+<span class="icon">⚙️</span>
+<span>Admin Panel</span>
+</div>
+
+<span class="arrow">➜</span>
+
+</a><div class="footer">
+    ⭐ Season 2025 • Premium Edition ⭐
+</div>
 
 </div>
 
-<div class="footer">
-© 2025 DLS World Cup
-</div>
+<script>
 
-</div>
+// Menu Animation
+const buttons = document.querySelectorAll(".menu a");
+
+buttons.forEach((btn,index)=>{
+    btn.style.opacity="0";
+    btn.style.transform="translateY(30px)";
+
+    setTimeout(()=>{
+        btn.style.transition=".5s";
+        btn.style.opacity="1";
+        btn.style.transform="translateY(0)";
+    },250+(index*120));
+});
+
+// Trophy Animation
+const logo=document.querySelector(".logo");
+
+setInterval(()=>{
+    logo.style.transform="scale(1.08)";
+    setTimeout(()=>{
+        logo.style.transform="scale(1)";
+    },300);
+},3000);
+
+</script><style>
+
+/* Floating Stars */
+
+body::before{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background-image:
+radial-gradient(circle,#ffffff55 1px,transparent 1px);
+background-size:40px 40px;
+animation:starsMove 25s linear infinite;
+opacity:.25;
+pointer-events:none;
+}
+
+@keyframes starsMove{
+0%{
+transform:translateY(0);
+}
+100%{
+transform:translateY(-40px);
+}
+}
+
+/* Card Entrance */
+
+.container{
+animation:cardShow .8s ease;
+}
+
+@keyframes cardShow{
+from{
+opacity:0;
+transform:scale(.9);
+}
+to{
+opacity:1;
+transform:scale(1);
+}
+}
+
+/* Active Button */
+
+.menu a:active{
+transform:scale(.97);
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar{
+width:6px;
+}
+
+::-webkit-scrollbar-thumb{
+background:#00bfff;
+border-radius:20px;
+}
+
+</style>
 
 </body>
 </html>

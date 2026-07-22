@@ -1,44 +1,123 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DLS World Cup</title>
 
 <style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
 body{
-    font-family: Arial;
-    background:#0b132b;
-    color:white;
+    background:linear-gradient(135deg,#081120,#0b132b,#12305e);
+    background-size:300% 300%;
+    animation:bgMove 10s ease infinite;
+    min-height:100vh;
+    padding:15px;
+}
+
+@keyframes bgMove{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+.container{
+    width:100%;
+    min-height:calc(100vh - 30px);
+    background:rgba(28,37,65,.95);
+    border-radius:25px;
+    padding:25px;
+    box-shadow:0 0 30px rgba(0,0,0,.5);
     text-align:center;
 }
 
-.box{
-    margin:30px auto;
-    padding:25px;
-    width:80%;
-    background:#1c2541;
-    border-radius:15px;
+.logo{
+    font-size:70px;
+    animation:float 2s ease-in-out infinite;
 }
 
-a{
+@keyframes float{
+    50%{
+        transform:translateY(-8px);
+    }
+}
+
+h1{
+    color:#fff;
+    font-size:38px;
+    margin-top:10px;
+}
+
+.subtitle{
+    color:#ddd;
+    margin:15px 0 30px;
+    font-size:18px;
+}
+
+.menu a{
     display:block;
-    margin:15px;
-    padding:12px;
-    background:#3a86ff;
-    color:white;
+    width:100%;
+    padding:18px;
+    margin:14px 0;
+    background:linear-gradient(135deg,#3b82f6,#2563eb);
+    color:#fff;
     text-decoration:none;
-    border-radius:10px;
+    border-radius:15px;
+    font-size:20px;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.menu a:hover{
+    transform:scale(1.03);
+}
+
+.footer{
+    margin-top:25px;
+    color:#aaa;
+    font-size:14px;
+}@media (max-width:600px){
+    .container{
+        padding:20px;
+    }
+
+    h1{
+        font-size:32px;
+    }
+
+    .subtitle{
+        font-size:16px;
+    }
+
+    .menu a{
+        font-size:18px;
+        padding:16px;
+    }
+
+    .logo{
+        font-size:60px;
+    }
 }
 </style>
-
 </head>
 
 <body>
 
-<div class="box">
+<div class="container">
 
-<h1>🏆 DLS World Cup</h1>
+<div class="logo">🏆</div>
 
-<p>Welcome to DLS World Cup Tournament</p>
+<h1>DLS World Cup</h1>
+
+<p class="subtitle">Welcome to DLS World Cup Tournament</p>
+
+<div class="menu">
 
 <a href="teams.html">⚽ Teams</a>
 
@@ -46,7 +125,15 @@ a{
 
 <a href="table.html">📊 Points Table</a>
 
-<a href="knockout.html">🏆 Knockout</a><a href="admin.html">⚙️ Admin Panel</a>
+<a href="knockout.html">🏆 Knockout</a>
+
+<a href="admin.html">⚙️ Admin Panel</a>
+
+</div>
+
+<div class="footer">
+© 2025 DLS World Cup
+</div>
 
 </div>
 

@@ -16,13 +16,13 @@ font-family:Arial,sans-serif;
 
 body{
 min-height:100vh;
-background:linear-gradient(135deg,#020617,#0f172a,#1e3a8a,#020617);
-background-size:400% 400%;
-animation:bgMove 12s infinite;
 display:flex;
 justify-content:center;
 align-items:center;
 padding:20px;
+background:linear-gradient(-45deg,#020617,#0f172a,#1e3a8a,#2563eb);
+background-size:400% 400%;
+animation:bgMove 12s ease infinite;
 }
 
 @keyframes bgMove{
@@ -33,74 +33,88 @@ padding:20px;
 
 .container{
 width:100%;
-max-width:500px;
+max-width:460px;
+padding:30px;
+border-radius:30px;
 background:rgba(255,255,255,.08);
 backdrop-filter:blur(18px);
 border:1px solid rgba(255,255,255,.15);
-border-radius:25px;
-padding:30px;
-box-shadow:0 15px 40px rgba(0,0,0,.5);
+box-shadow:0 15px 40px rgba(0,0,0,.45);
 text-align:center;
 }
 
 .logo{
-font-size:80px;
-animation:float 3s infinite;
+font-size:90px;
+filter:drop-shadow(0 0 20px gold);
+animation:float 3s ease-in-out infinite;
 }
 
 @keyframes float{
-50%{transform:translateY(-10px);}
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-12px);}
 }
 
 h1{
-color:#fff;
-font-size:38px;
 margin-top:10px;
+font-size:38px;
+font-weight:bold;
+color:#fff;
 text-shadow:0 0 20px #38bdf8;
 }
 
-p{
-color:#cbd5e1;
-margin:12px 0 30px;
+.subtitle{
+margin-top:8px;
+margin-bottom:35px;
 font-size:17px;
-}
-
-.menu{
+color:#dbeafe;
+}.menu{
 display:flex;
 flex-direction:column;
-gap:15px;
+gap:22px;
+margin-top:35px;
 }
 
 .menu a{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:20px 28px;
 text-decoration:none;
-padding:16px;
-border-radius:16px;
-background:linear-gradient(135deg,#2563eb,#9333ea);
 color:#fff;
-font-size:18px;
+font-size:20px;
 font-weight:bold;
-transition:.3s;
-box-shadow:0 8px 20px rgba(0,0,0,.35);
+border-radius:22px;
+background:linear-gradient(90deg,#18a8f3,#176dff);
+box-shadow:0 10px 25px rgba(0,0,0,.35);
+transition:.35s;
 }
 
 .menu a:hover{
-transform:translateY(-4px);
-box-shadow:0 0 25px #38bdf8;
-}.menu a:nth-child(1){background:linear-gradient(135deg,#2563eb,#3b82f6);}
-.menu a:nth-child(2){background:linear-gradient(135deg,#16a34a,#22c55e);}
-.menu a:nth-child(3){background:linear-gradient(135deg,#ca8a04,#facc15);}
-.menu a:nth-child(4){background:linear-gradient(135deg,#dc2626,#ef4444);}
-.menu a:nth-child(5){background:linear-gradient(135deg,#7c3aed,#9333ea);}
-.menu a:nth-child(6){background:linear-gradient(135deg,#0891b2,#06b6d4);}
-.menu a:nth-child(7){background:linear-gradient(135deg,#475569,#64748b);}
-
-.footer{
-margin-top:25px;
-color:#cbd5e1;
-font-size:14px;
+transform:translateY(-4px) scale(1.02);
+box-shadow:0 0 30px #32b8ff;
 }
 
-</style>
+.left{
+display:flex;
+align-items:center;
+gap:18px;
+}
+
+.icon{
+font-size:36px;
+}
+
+.arrow{
+font-size:34px;
+font-weight:bold;
+}
+
+.footer{
+margin-top:35px;
+font-size:16px;
+color:#ddd;
+letter-spacing:2px;
+}</style>
 </head>
 
 <body>
@@ -109,27 +123,53 @@ font-size:14px;
 
 <div class="logo">🏆</div>
 
-<h1>DLS World Cup</h1>
+<h1>DLS WORLD CUP</h1>
 
-<p>Official Tournament Dashboard</p>
+<p class="subtitle">The Ultimate Football Tournament</p>
 
 <div class="menu">
 
-<a href="teams.html">👥 Teams</a>
-
-<a href="fixtures.html">📅 Fixtures</a>
-
-<a href="table.html">📊 Group Table</a><a href="knockout.html">🥊 Knockout</a>
-
-
-<a href="admin.html">⚙️ Admin Panel</a>
-
-
+<a href="teams.html">
+<div class="left">
+<span class="icon">⚽</span>
+<span>Teams</span>
 </div>
+<span class="arrow">➜</span>
+</a>
 
-<div class="footer">
+<a href="fixtures.html">
+<div class="left">
+<span class="icon">🏟️</span>
+<span>Fixtures</span>
+</div>
+<span class="arrow">➜</span>
+</a>
 
-<p>© 2026 DLS World Cup. All Rights Reserved.</p>
+<a href="table.html">
+<div class="left">
+<span class="icon">📊</span>
+<span>Points Table</span>
+</div>
+<span class="arrow">➜</span>
+</a>
+
+<a href="knockout.html">
+<div class="left">
+<span class="icon">🏆</span>
+<span>Knockout</span>
+</div>
+<span class="arrow">➜</span>
+</a>
+
+<a href="admin.html">
+<div class="left">
+<span class="icon">⚙️</span>
+<span>Admin Panel</span>
+</div>
+<span class="arrow">➜</span>
+</a><div class="footer">
+
+⭐ Season 2025 • Premium Edition ⭐
 
 </div>
 
@@ -137,54 +177,92 @@ font-size:14px;
 
 <script>
 
-const buttons=document.querySelectorAll(".menu a");
+const cards = document.querySelectorAll(".menu a");
 
-buttons.forEach((btn,index)=>{
+cards.forEach((card,index)=>{
 
-btn.style.opacity="0";
-btn.style.transform="translateY(25px)";
+card.style.opacity="0";
+card.style.transform="translateY(30px)";
 
 setTimeout(()=>{
 
-btn.style.transition=".5s";
-btn.style.opacity="1";
-btn.style.transform="translateY(0)";
+card.style.opacity="1";
+card.style.transform="translateY(0)";
+card.style.transition=".5s";
 
 },index*120);
 
-});// Hover Click Effect
+});
 
-buttons.forEach(btn=>{
+cards.forEach(card=>{
 
-btn.addEventListener("click",()=>{
+card.addEventListener("touchstart",()=>{
 
-btn.style.transform="scale(.96)";
-
-setTimeout(()=>{
-
-btn.style.transform="";
-
-},150);
+card.style.transform="scale(.97)";
 
 });
 
-});
-
-// Floating Logo
-
-const logo=document.querySelector(".logo");
-
-setInterval(()=>{
-
-logo.style.transform="translateY(-8px)";
+card.addEventListener("touchend",()=>{
 
 setTimeout(()=>{
 
-logo.style.transform="translateY(0)";
+card.style.transform="";
 
-},500);
+},120);
 
-},2000);</script>
+});
 
-</body>
-</html>
+});</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="logo">🏆</div>
+
+<h1>DLS WORLD CUP</h1>
+
+<p class="subtitle">The Ultimate Football Tournament</p>
+
+<div class="menu">
+
+<a href="teams.html">
+<div class="left">
+<span class="icon">⚽</span>
+<span>Teams</span>
+</div>
+<span class="arrow">➜</span>
+</a>
+
+<a href="fixtures.html">
+<div class="left">
+<span class="icon">🏟️</span>
+<span>Fixtures</span>
+</div>
+<span class="arrow">➜</span>
+</a>
+
+<a href="table.html">
+<div class="left">
+<span class="icon">📊</span>
+<span>Points Table</span>
+</div>
+<span class="arrow">➜</span>
+</a>
+
+<a href="knockout.html">
+<div class="left">
+<span class="icon">🏆</span>
+<span>Knockout</span>
+</div>
+<span class="arrow">➜</span>
+</a>
+
+<a href="admin.html">
+<div class="left">
+<span class="icon">⚙️</span>
+<span>Admin Panel</span>
+</div>
+<span class="arrow">➜</span>
+</a>

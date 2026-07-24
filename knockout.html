@@ -41,7 +41,6 @@ margin:auto;
 }
 
 
-
 .header{
 
 text-align:center;
@@ -51,13 +50,11 @@ margin-bottom:25px;
 }
 
 
-
 .logo{
 
 font-size:70px;
 
 }
-
 
 
 h1{
@@ -69,7 +66,6 @@ text-shadow:0 0 15px #00bfff;
 }
 
 
-
 .subtitle{
 
 color:#cbd5e1;
@@ -77,7 +73,6 @@ color:#cbd5e1;
 margin-top:10px;
 
 }
-
 
 
 .section{
@@ -95,7 +90,6 @@ box-shadow:0 10px 30px rgba(0,0,0,.4);
 }
 
 
-
 .section h2{
 
 text-align:center;
@@ -107,7 +101,6 @@ margin-bottom:20px;
 }
 
 
-
 .match{
 
 margin:15px 0;
@@ -116,11 +109,9 @@ padding:18px;
 
 border-radius:18px;
 
-background:
-linear-gradient(135deg,#1d4ed8,#2563eb);
+background:linear-gradient(135deg,#1d4ed8,#2563eb);
 
 }
-
 
 
 .teamRow{
@@ -136,13 +127,11 @@ font-weight:bold;
 }
 
 
-
 .flag{
 
 font-size:25px;
 
 }
-
 
 
 .score{
@@ -164,7 +153,6 @@ font-weight:bold;
 }
 
 
-
 .winner{
 
 background:#16a34a;
@@ -179,6 +167,14 @@ margin-top:10px;
 
 }
 
+
+/* hidden until stage complete */
+
+.hide{
+
+display:none;
+
+}
 
 
 </style>
@@ -212,10 +208,31 @@ Premium Knockout Stage
 </div>
 
 
-<!-- ROUND OF 16 -->
+
+<!-- STATUS -->
 
 <div class="section">
 
+<h2>📢 Tournament Status</h2>
+
+<div id="status"
+style="
+text-align:center;
+font-size:22px;
+padding:15px;
+">
+
+⏳ Waiting...
+
+</div>
+
+</div>
+
+
+
+<!-- ROUND OF 16 -->
+
+<div class="section hide" id="r16Box">
 
 <h2>
 ⚔️ Round of 16
@@ -225,16 +242,105 @@ Premium Knockout Stage
 <div id="r16"></div>
 
 
+</div>// =======================
+// QUARTER FINAL BOX
+// =======================
+
+
+<div class="section hide" id="qfBox">
+
+<h2>
+🏆 Quarter Final
+</h2>
+
+
+<div id="qf"></div>
+
+
 </div>
+
+
+
+
+
+<!-- SEMI FINAL -->
+
+<div class="section hide" id="sfBox">
+
+
+<h2>
+🔥 Semi Final
+</h2>
+
+
+<div id="sf"></div>
+
+
+</div>
+
+
+
+
+
+<!-- FINAL -->
+
+<div class="section hide" id="finalBox">
+
+
+<h2>
+👑 Final
+</h2>
+
+
+<div id="final"></div>
+
+
+</div>
+
+
+
+
+
+<!-- CHAMPION -->
+
+<div class="section hide" id="championBox">
+
+
+<h2>
+🏆 World Champion
+</h2>
+
+
+<div id="champion"
+
+style="
+text-align:center;
+font-size:30px;
+padding:20px;
+">
+
+👑 To Be Decided
+
+
+</div>
+
+
+</div>
+
+
 
 
 
 <script>
 
 
+// =======================
 // FLAGS
+// =======================
+
 
 const FLAGS={
+
 
 Argentina:"🇦🇷",
 Germany:"🇩🇪",
@@ -258,121 +364,59 @@ Colombia:"🇨🇴",
 Switzerland:"🇨🇭",
 
 USA:"🇺🇸",
-Turkey:"🇹🇷"
+Turkey:"🇹🇷",
+
+Canada:"🇨🇦",
+Saudi Arabia:"🇸🇦",
+
+Nigeria:"🇳🇬",
+Australia:"🇦🇺",
+
+Iran:"🇮🇷",
+Egypt:"🇪🇬",
+
+China:"🇨🇳",
+Qatar:"🇶🇦",
+
+Japan:"🇯🇵",
+South Korea:"🇰🇷",
+
+Morocco:"🇲🇦",
+Senegal:"🇸🇳",
+
+Poland:"🇵🇱",
+Denmark:"🇩🇰",
+
+Serbia:"🇷🇸",
+Ukraine:"🇺🇦"
+
 
 };
 
 
 
-// DEFAULT ROUND 16
+
+// =======================
+// LOAD DATA
+// =======================
 
 
-if(!localStorage.r16Matches){
-
-
-localStorage.r16Matches=
-
-JSON.stringify([
-
-
-"Argentina vs Germany",
-
-"Brazil vs Portugal",
-
-"France vs England",
-
-"Spain vs Italy",
-
-
-"Netherlands vs Belgium",
-
-"Croatia vs Uruguay",
-
-"Colombia vs Switzerland",
-
-"USA vs Turkey"
-
-
-]);
-
-
-}
-
-
-
-
-let r16Matches=
-
+let knockout =
 JSON.parse(
-
-localStorage.r16Matches || "[]"
-
-);
-
-
-
-let knockout=
-
-JSON.parse(
-
 localStorage.knockoutResults || "[]"
-
 );
 
 
 
-</script><script>
-
-
-// =======================
-// GET WINNER
-// =======================
-
-
-function getWinner(match,score){
-
-
-let teams = match.split(" vs ");
-
-
-let goals = score.split("-");
-
-
-let a = Number(goals[0].trim());
-
-let b = Number(goals[1].trim());
-
-
-
-if(a>b){
-
-return teams[0].trim();
-
-}
-
-
-
-if(b>a){
-
-return teams[1].trim();
-
-}
-
-
-
-return "";
-
-}
-
-
-
-// =======================
+let r16Matches =
+JSON.parse(
+localStorage.r16Matches || "[]"
+);// =======================
 // TEAM CARD
 // =======================
 
 
 function teamCard(team){
-
 
 return `
 
@@ -384,9 +428,7 @@ ${FLAGS[team] || "🏳️"}
 
 </span>
 
-
 ${team}
-
 
 </div>
 
@@ -399,14 +441,94 @@ ${team}
 
 
 // =======================
-// LOAD ROUND OF 16
+// GET WINNER
+// =======================
+
+
+function getWinner(match,score){
+
+
+let teams =
+match.split(" vs ");
+
+
+let goals =
+score.split("-");
+
+
+let a =
+Number(goals[0].trim());
+
+
+let b =
+Number(goals[1].trim());
+
+
+
+if(a>b){
+
+return teams[0].trim();
+
+}
+
+
+if(b>a){
+
+return teams[1].trim();
+
+}
+
+
+return "";
+
+}
+
+
+
+
+
+// =======================
+// GROUP STAGE CHECK
+// =======================
+
+
+function checkGroupComplete(){
+
+
+let results =
+JSON.parse(
+localStorage.groupResults || "[]"
+);
+
+
+// 48 group match complete
+
+if(results.length >= 48){
+
+return true;
+
+}
+
+
+return false;
+
+
+}
+
+
+
+
+
+// =======================
+// ROUND 16 LOAD
 // =======================
 
 
 function loadRound16(){
 
 
-let box=document.getElementById("r16");
+let box =
+document.getElementById("r16");
 
 
 box.innerHTML="";
@@ -416,11 +538,13 @@ box.innerHTML="";
 r16Matches.forEach(match=>{
 
 
-let teams=match.split(" vs ");
+let teams =
+match.split(" vs ");
 
 
 
-let result=knockout.find(x=>
+let result =
+knockout.find(x=>
 
 x.round=="Round of 16"
 
@@ -444,12 +568,11 @@ if(result){
 score=result.score;
 
 
-winner=getWinner(match,result.score);
+winner =
+getWinner(match,result.score);
 
 
 }
-
-
 
 
 
@@ -460,13 +583,9 @@ box.innerHTML+=`
 
 <div class="teamRow">
 
-
 ${teamCard(teams[0].trim())}
 
-
 ${teamCard(teams[1].trim())}
-
-
 
 </div>
 
@@ -480,8 +599,7 @@ ${score}
 
 
 
-
-${winner?
+${winner ?
 
 
 `
@@ -493,7 +611,6 @@ ${winner?
 ${FLAGS[winner] || ""}
 
 ${winner}
-
 
 </div>
 
@@ -509,7 +626,6 @@ ${winner}
 `;
 
 
-
 });
 
 
@@ -519,35 +635,36 @@ ${winner}
 
 
 
-loadRound16();
-
-
-
-  </script><!-- ================= -->
-<!-- QUARTER FINAL -->
-<!-- ================= -->
-
-
-<div class="section">
-
-
-<h2>
-🏆 Quarter Final
-</h2>
-
-
-<div id="qf"></div>
-
-
-</div>
-
-
-
-
-<script>
 
 
 // =======================
+// ROUND 16 COMPLETE CHECK
+// =======================
+
+
+function checkRound16Complete(){
+
+
+let data =
+JSON.parse(
+localStorage.knockoutResults || "[]"
+);
+
+
+
+let matches =
+data.filter(x=>
+
+x.round=="Round of 16"
+
+);
+
+
+
+return matches.length>=8;
+
+
+}// =======================
 // CREATE QUARTER FINAL
 // =======================
 
@@ -558,28 +675,27 @@ function createQuarterFinal(){
 let winners=[];
 
 
-
-r16Matches.forEach(match=>{
-
-
-let result=knockout.find(x=>
-
-
-x.round=="Round of 16"
-
-&&
-
-x.match==match
-
-
+let data =
+JSON.parse(
+localStorage.knockoutResults || "[]"
 );
 
 
 
-if(result){
+data.filter(x=>
+
+x.round=="Round of 16"
+
+)
+
+.forEach(x=>{
 
 
-let w=getWinner(match,result.score);
+let w =
+getWinner(
+x.match,
+x.score
+);
 
 
 
@@ -590,54 +706,36 @@ winners.push(w);
 }
 
 
-
-}
-
-
-
 });
-
-
 
 
 
 if(winners.length==8){
 
 
-
-let qf=[];
-
+let qf=[
 
 
-for(let i=0;i<8;i+=2){
+winners[0]+" vs "+winners[1],
+
+winners[2]+" vs "+winners[3],
+
+winners[4]+" vs "+winners[5],
+
+winners[6]+" vs "+winners[7]
 
 
-
-qf.push(
-
-winners[i]+" vs "+winners[i+1]
-
-);
+];
 
 
-
-}
-
-
-
-localStorage.qfMatches=
-
+localStorage.qfMatches =
 JSON.stringify(qf);
 
 
-
 }
 
 
-
 }
-
-
 
 
 
@@ -651,118 +749,44 @@ JSON.stringify(qf);
 function loadQuarterFinal(){
 
 
-let box=document.getElementById("qf");
+let box =
+document.getElementById("qf");
 
 
 box.innerHTML="";
 
 
-
-let qfMatches=
-
+let qf =
 JSON.parse(
-
 localStorage.qfMatches || "[]"
-
 );
 
 
 
+qf.forEach(match=>{
 
 
-qfMatches.forEach(match=>{
-
-
-
-let teams=match.split(" vs ");
-
-
-
-let result=knockout.find(x=>
-
-
-x.round=="Quarter Final"
-
-&&
-
-x.match==match
-
-
-);
-
-
-
-let score="VS";
-
-let winner="";
-
-
-
-if(result){
-
-
-score=result.score;
-
-
-winner=getWinner(match,result.score);
-
-
-}
+let teams =
+match.split(" vs ");
 
 
 
 box.innerHTML+=`
 
-
 <div class="match">
-
 
 <div class="teamRow">
 
+${teamCard(teams[0])}
 
-${teamCard(teams[0].trim())}
-
-
-
-${teamCard(teams[1].trim())}
-
-
+${teamCard(teams[1])}
 
 </div>
-
 
 
 <div class="score">
-
-${score}
-
+VS
 </div>
-
-
-
-${winner?
-
-
-`
-
-<div class="winner">
-
-
-🏆 Winner :
-
-
-${FLAGS[winner]||""}
-
-${winner}
-
-
-</div>
-
-
-`
-
-:""}
-
 
 
 </div>
@@ -775,6 +799,37 @@ ${winner}
 });
 
 
+}
+
+
+
+
+// =======================
+// QUARTER COMPLETE CHECK
+// =======================
+
+
+function checkQuarterComplete(){
+
+
+let data =
+JSON.parse(
+localStorage.knockoutResults || "[]"
+);
+
+
+
+let qf =
+data.filter(x=>
+
+x.round=="Quarter Final"
+
+);
+
+
+
+return qf.length>=4;
+
 
 }
 
@@ -782,36 +837,6 @@ ${winner}
 
 
 
-createQuarterFinal();
-
-
-loadQuarterFinal();
-
-
-
-</script><!-- ================= -->
-<!-- SEMI FINAL -->
-<!-- ================= -->
-
-
-<div class="section">
-
-
-<h2>
-🔥 Semi Final
-</h2>
-
-
-<div id="sf"></div>
-
-
-</div>
-
-
-
-
-
-<script>
 
 
 // =======================
@@ -822,41 +847,30 @@ loadQuarterFinal();
 function createSemiFinal(){
 
 
-let qfMatches=
-
-JSON.parse(
-
-localStorage.qfMatches || "[]"
-
-);
-
-
-
 let winners=[];
 
 
-
-qfMatches.forEach(match=>{
-
-
-let result=knockout.find(x=>
-
-
-x.round=="Quarter Final"
-
-&&
-
-x.match==match
-
-
+let data =
+JSON.parse(
+localStorage.knockoutResults || "[]"
 );
 
 
 
-if(result){
+data.filter(x=>
+
+x.round=="Quarter Final"
+
+)
+
+.forEach(x=>{
 
 
-let w=getWinner(match,result.score);
+let w =
+getWinner(
+x.match,
+x.score
+);
 
 
 
@@ -867,52 +881,30 @@ winners.push(w);
 }
 
 
-
-}
-
-
-
 });
-
-
 
 
 
 if(winners.length==4){
 
 
-let sf=[];
-
-
-
-for(let i=0;i<4;i+=2){
-
-
-sf.push(
-
-winners[i]+" vs "+winners[i+1]
-
-);
-
-
-}
-
-
-
 localStorage.sfMatches=
 
-JSON.stringify(sf);
+JSON.stringify([
 
+
+winners[0]+" vs "+winners[1],
+
+winners[2]+" vs "+winners[3]
+
+
+]);
 
 
 }
 
 
-
 }
-
-
-
 
 
 
@@ -925,124 +917,47 @@ JSON.stringify(sf);
 function loadSemiFinal(){
 
 
-let box=document.getElementById("sf");
+let box =
+document.getElementById("sf");
 
 
 box.innerHTML="";
 
 
-
-let sfMatches=
-
+let sf =
 JSON.parse(
-
 localStorage.sfMatches || "[]"
-
 );
 
 
 
+sf.forEach(match=>{
 
 
-sfMatches.forEach(match=>{
-
-
-
-let teams=match.split(" vs ");
-
-
-
-let result=knockout.find(x=>
-
-
-x.round=="Semi Final"
-
-&&
-
-x.match==match
-
-
-);
-
-
-
-let score="VS";
-
-let winner="";
-
-
-
-if(result){
-
-
-score=result.score;
-
-
-winner=getWinner(match,result.score);
-
-
-}
+let teams =
+match.split(" vs ");
 
 
 
 box.innerHTML+=`
 
-
 <div class="match">
-
 
 <div class="teamRow">
 
+${teamCard(teams[0])}
 
-${teamCard(teams[0].trim())}
-
-
-
-${teamCard(teams[1].trim())}
-
-
+${teamCard(teams[1])}
 
 </div>
-
 
 
 <div class="score">
-
-${score}
-
+VS
 </div>
 
 
-
-${winner?
-
-
-`
-
-<div class="winner">
-
-
-🏆 Winner :
-
-
-${FLAGS[winner]||""}
-
-
-${winner}
-
-
 </div>
-
-
-`
-
-:""}
-
-
-
-</div>
-
-
 
 `;
 
@@ -1051,46 +966,7 @@ ${winner}
 });
 
 
-
-}
-
-
-
-
-
-createSemiFinal();
-
-
-loadSemiFinal();
-
-
-
-</script><!-- ================= -->
-<!-- FINAL -->
-<!-- ================= -->
-
-
-<div class="section">
-
-
-<h2>
-👑 Final
-</h2>
-
-
-<div id="final"></div>
-
-
-</div>
-
-
-
-
-
-<script>
-
-
-// =======================
+}// =======================
 // CREATE FINAL
 // =======================
 
@@ -1098,41 +974,30 @@ loadSemiFinal();
 function createFinal(){
 
 
-let sfMatches=
-
-JSON.parse(
-
-localStorage.sfMatches || "[]"
-
-);
-
-
-
 let winners=[];
 
 
-
-sfMatches.forEach(match=>{
-
-
-let result=knockout.find(x=>
-
-
-x.round=="Semi Final"
-
-&&
-
-x.match==match
-
-
+let data =
+JSON.parse(
+localStorage.knockoutResults || "[]"
 );
 
 
 
-if(result){
+data.filter(x=>
+
+x.round=="Semi Final"
+
+)
+
+.forEach(x=>{
 
 
-let w=getWinner(match,result.score);
+let w =
+getWinner(
+x.match,
+x.score
+);
 
 
 
@@ -1143,14 +1008,7 @@ winners.push(w);
 }
 
 
-
-}
-
-
-
 });
-
-
 
 
 
@@ -1169,10 +1027,7 @@ winners[0]+" vs "+winners[1]
 }
 
 
-
 }
-
-
 
 
 
@@ -1186,125 +1041,50 @@ winners[0]+" vs "+winners[1]
 function loadFinal(){
 
 
-let box=document.getElementById("final");
+let box =
+document.getElementById("final");
 
 
 box.innerHTML="";
 
 
-
-let finalMatches=
-
+let finalMatches =
 JSON.parse(
-
 localStorage.finalMatches || "[]"
-
 );
-
-
 
 
 
 finalMatches.forEach(match=>{
 
 
-
-let teams=match.split(" vs ");
-
-
-
-let result=knockout.find(x=>
-
-
-x.round=="Final"
-
-&&
-
-x.match==match
-
-
-);
-
-
-
-let score="VS";
-
-let winner="";
-
-
-
-if(result){
-
-
-score=result.score;
-
-
-winner=getWinner(match,result.score);
-
-
-}
-
-
+let teams =
+match.split(" vs ");
 
 
 
 box.innerHTML+=`
-
 
 <div class="match">
 
 
 <div class="teamRow">
 
+${teamCard(teams[0])}
 
-${teamCard(teams[0].trim())}
-
-
-
-${teamCard(teams[1].trim())}
-
-
+${teamCard(teams[1])}
 
 </div>
-
 
 
 <div class="score">
 
-${score}
+VS
 
 </div>
 
 
-
-${winner?
-
-
-`
-
-<div class="winner">
-
-
-🏆 Champion :
-
-
-${FLAGS[winner]||""}
-
-${winner}
-
-
 </div>
-
-
-`
-
-:""}
-
-
-
-</div>
-
-
 
 `;
 
@@ -1313,59 +1093,36 @@ ${winner}
 });
 
 
-
 }
 
 
 
 
-
-
 // =======================
-// FINAL WINNER SAVE
+// CHAMPION
 // =======================
 
 
 function updateChampion(){
 
 
-let finalMatches=
-
+let data =
 JSON.parse(
-
-localStorage.finalMatches || "[]"
-
+localStorage.knockoutResults || "[]"
 );
 
 
 
-finalMatches.forEach(match=>{
+data.forEach(x=>{
 
 
-
-let result=knockout.find(x=>
-
-
-x.round=="Final"
-
-&&
-
-x.match==match
+if(x.round=="Final"){
 
 
-);
-
-
-
-if(result){
-
-
-let winner=getWinner(
-
-match,
-
-result.score
-
+let winner =
+getWinner(
+x.match,
+x.score
 );
 
 
@@ -1373,21 +1130,34 @@ result.score
 if(winner){
 
 
-localStorage.setItem(
+localStorage.champion=winner;
 
-"champion",
 
-winner
+document.getElementById("champion").innerHTML=
 
-);
+`
+🏆
+
+<br>
+
+${FLAGS[winner] || ""}
+
+${winner}
+
+<br><br>
+
+WORLD CHAMPION
+
+`;
+
+
+document.getElementById("championBox").classList.remove("hide");
 
 
 }
 
 
-
 }
-
 
 
 });
@@ -1399,193 +1169,106 @@ winner
 
 
 
-createFinal();
-
-
-loadFinal();
-
-
-updateChampion();
-
-
-
-  </script><!-- ================= -->
-<!-- WORLD CHAMPION -->
-<!-- ================= -->
-
-
-<div class="section">
-
-
-<h2>
-🏆 World Champion
-</h2>
-
-
-<div id="champion"
-
-style="
-text-align:center;
-font-size:30px;
-padding:25px;
-">
-
-👑 To Be Decided
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-<script>
-
-
 // =======================
-// LOAD CHAMPION
+// FULL AUTO SYSTEM
 // =======================
 
 
-function loadChampion(){
-
-
-let champion=
-
-localStorage.getItem("champion") || "";
+function updateTournament(){
 
 
 
-let box=document.getElementById("champion");
-
-
-
-if(champion==""){
-
-
-box.innerHTML="👑 To Be Decided";
-
-
-return;
-
-
-}
-
-
-
-box.innerHTML=`
-
-
-<div style="font-size:65px">
-
-🏆
-
-</div>
-
-
-<div>
-
-
-${FLAGS[champion] || ""}
-
-${champion}
-
-
-</div>
-
-
-<br>
-
-
-<div style="font-size:18px">
-
-
-⭐⭐⭐⭐⭐⭐
-
-
-<br><br>
-
-
-WORLD CHAMPION
-
-
-</div>
-
-
-`;
-
-
-
-}
-
-
-
-
-
-
-
-// =======================
-// FULL AUTO UPDATE
-// =======================
-
-
-function refreshKnockout(){
-
-
-
-knockout=
-
+knockout =
 JSON.parse(
-
 localStorage.knockoutResults || "[]"
-
 );
 
 
 
-r16Matches=
+// GROUP COMPLETE
 
-JSON.parse(
-
-localStorage.r16Matches || "[]"
-
-);
+if(checkGroupComplete()){
 
 
-
-
-
-createQuarterFinal();
-
-
-createSemiFinal();
-
-
-createFinal();
-
-
-updateChampion();
-
-
-
+document.getElementById("r16Box")
+.classList.remove("hide");
 
 
 loadRound16();
 
 
+}
+
+
+// ROUND 16 COMPLETE
+
+if(checkRound16Complete()){
+
+
+createQuarterFinal();
+
+
+document.getElementById("qfBox")
+.classList.remove("hide");
+
+
 loadQuarterFinal();
+
+
+}
+
+
+
+// QUARTER COMPLETE
+
+if(checkQuarterComplete()){
+
+
+createSemiFinal();
+
+
+document.getElementById("sfBox")
+.classList.remove("hide");
 
 
 loadSemiFinal();
 
 
+}
+
+
+
+// SEMI COMPLETE
+
+let sf =
+knockout.filter(x=>
+
+x.round=="Semi Final"
+
+);
+
+
+
+if(sf.length>=2){
+
+
+createFinal();
+
+
+document.getElementById("finalBox")
+.classList.remove("hide");
+
+
 loadFinal();
 
 
-loadChampion();
+}
+
+
+
+// CHAMPION
+
+updateChampion();
 
 
 
@@ -1593,312 +1276,43 @@ loadChampion();
 
 
 
-
-
-
-// Auto Refresh
+// =======================
+// AUTO UPDATE
+// =======================
 
 
 setInterval(function(){
 
-
-refreshKnockout();
-
+updateTournament();
 
 },1000);
 
 
 
 
-// First Load
+// FIRST LOAD
 
+updateTournament();
 
-refreshKnockout();
 
 
+</script>
 
-</script><style>
-
-
-/* Match Hover Effect */
-
-.match{
-
-position:relative;
-
-overflow:hidden;
-
-transition:.35s;
-
-cursor:pointer;
-
-}
-
-
-
-.match:hover{
-
-
-transform:
-
-translateY(-5px)
-
-scale(1.02);
-
-
-box-shadow:
-
-0 0 25px #00bfff;
-
-
-}
-
-
-
-
-/* Shine Animation */
-
-
-.match::before{
-
-
-content:"";
-
-
-position:absolute;
-
-
-top:0;
-
-
-left:-120%;
-
-
-width:100%;
-
-
-height:100%;
-
-
-background:
-
-linear-gradient(
-
-90deg,
-
-transparent,
-
-rgba(255,255,255,.35),
-
-transparent
-
-);
-
-
-
-transition:.8s;
-
-
-}
-
-
-
-
-.match:hover::before{
-
-
-left:120%;
-
-
-}
-
-
-
-
-
-/* Winner Glow */
-
-
-.winner{
-
-
-animation:
-
-winnerGlow 2s infinite alternate;
-
-
-}
-
-
-
-@keyframes winnerGlow{
-
-
-from{
-
-
-box-shadow:
-
-0 0 8px #16a34a;
-
-
-}
-
-
-
-to{
-
-
-box-shadow:
-
-0 0 25px #22c55e;
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-/* Champion Glow */
-
-
-#champion{
-
-
-border-radius:20px;
-
-
-background:
-
-linear-gradient(
-
-135deg,
-
-#facc15,
-
-#f97316
-
-);
-
-
-font-weight:bold;
-
-
-box-shadow:
-
-0 0 30px gold;
-
-
-animation:
-
-championAnimation 2s infinite alternate;
-
-
-}
-
-
-
-
-
-@keyframes championAnimation{
-
-
-from{
-
-
-transform:scale(1);
-
-
-}
-
-
-
-to{
-
-
-transform:scale(1.05);
-
-
-}
-
-
-
-}
-
-
-
-
-/* Logo Animation */
-
-
-.logo{
-
-
-animation:
-
-floatLogo 3s infinite;
-
-
-}
-
-
-
-
-@keyframes floatLogo{
-
-
-50%{
-
-
-transform:translateY(-10px);
-
-
-}
-
-
-
-}
-
-
-
-</style><!-- ================= -->
-<!-- BACK BUTTON -->
-<!-- ================= -->
 
 
 <a href="index.html"
 
 style="
-
 display:block;
-
 width:max-content;
-
 margin:30px auto;
-
 padding:12px 25px;
-
 border-radius:15px;
-
 background:#2563eb;
-
 color:white;
-
 text-decoration:none;
-
 font-size:18px;
-
 font-weight:bold;
-
-box-shadow:0 0 20px #00bfff;
-
 ">
 
 🏠 Back To Home
@@ -1911,6 +1325,5 @@ box-shadow:0 0 20px #00bfff;
 
 
 </body>
-
 
 </html>
